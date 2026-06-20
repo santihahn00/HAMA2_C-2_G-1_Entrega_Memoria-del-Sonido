@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memoria del Sonido - Experiencia Interactiva</title>
+    <link rel="stylesheet" href="index.css">
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <audio id="audio-cassette-inicial" src="sonido/ruidoCassette.mp3" preload="auto" loop></audio>
+
+    <audio id="audio-final-cinta" src="sonido/cancionCinta.mp3" preload="auto" loop></audio>
+    <audio id="audio-final-vinilo" src="sonido/cancionVinilo.mp3" preload="auto" loop></audio>
+    <audio id="audio-final-cassette" src="sonido/cancionCassette.mp3" preload="auto" loop></audio>
+    <audio id="audio-final-digital" src="sonido/cancionDigital.mp3" preload="auto" loop></audio>
+
+    <section id="pantalla-titulo" class="pantalla activa">
+        <h1 id="btn-comenzar">Memoria del Sonido</h1>
+    </section>
+
+    <section id="pantalla-explicacion" class="pantalla">
+        <div id="mosaico-flotante"></div>
+        
+        <div class="contenedor-texto-explicativo">
+            <p>El sonido deja marcas. Huellas físicas, mecánicas y magnéticas que batallan contra el olvido. Lo que estás por experimentar no es solo una línea de tiempo; es la materialidad del tiempo mutando hacia la levedad de los bits.</p>
+        </div>
+    </section>
+
+    <section id="pantalla-hub" class="pantalla">
+        <div class="contenedor-hub-estructurado">
+            <h2 class="titulo-seleccion">Selecciona un soporte</h2>
+            
+            <div class="grilla-formatos-inicial">
+                <article class="tarjeta-formato" data-formato="cinta">
+                    <div class="caja-img"><img src="imagen/cinta.png" alt="Cinta"></div>
+                    <h3>Cinta</h3>
+                </article>
+
+                <article class="tarjeta-formato" data-formato="vinilo">
+                    <div class="caja-img"><img src="imagen/vinilo.png" alt="Vinilo"></div>
+                    <h3>Vinilo</h3>
+                </article>
+
+                <article class="tarjeta-formato" data-formato="cassette">
+                    <div class="caja-img"><img src="imagen/cassette.png" alt="Cassette"></div>
+                    <h3>Cassette</h3>
+                </article>
+
+                <article class="tarjeta-formato" data-formato="digital">
+                    <div class="caja-img"><img src="imagen/digital.png" alt="Digital"></div>
+                    <h3>Digital</h3>
+                </article>
+            </div>
+
+            <article class="tarjeta-misterio oculto" id="tarjeta-incognita">
+                <div class="signo">?</div>
+            </article>
+        </div>
+    </section>
+
+    <section id="pantalla-espacio" class="pantalla">
+        <div class="contenido-espacio">
+            <h2 id="titulo-espacio-actual">Nombre Formato</h2>
+            <div class="mini-navegacion" id="contenedor-mini-nav"></div>
+        </div>
+    </section>
+
+    <section id="pantalla-final" class="pantalla">
+        <button class="btn-volver-esquina" id="btn-regresar-a-hub">← Soportes</button>
+
+        <div class="seccion-comparativa">
+            <h2>¿Podes escuchar la diferencia?</h2>
+            
+            <div class="grilla-videos-interactivos">
+                <div class="cuadrante-interactivo" data-audio="audio-final-digital">
+                    <video loop muted src="video/videoDigital.mp4"></video>
+                </div>
+
+                <div class="cuadrante-interactivo" data-audio="audio-final-vinilo">
+                    <video loop muted src="video/videoVinilo.mp4"></video>
+                </div>
+
+                <div class="cuadrante-interactivo" data-audio="audio-final-cinta">
+                    <video loop muted src="video/videoCinta.mp4"></video>
+                </div>
+
+                <div class="cuadrante-interactivo" data-audio="audio-final-cassette">
+                    <video loop muted src="video/videoCassette.mp4"></video>
+                </div>
+            </div>
+        </div>
+
+        <div class="seccion-documental">
+            <div class="bloque-introductorio-video">
+                <h3>El Registro Material</h3>
+                <p>A través de las décadas, la captura del espectro sonoro ha oscilado entre imperfecciones mecánicas entrañables y la frialdad matemática de los entornos modernos. El siguiente fragmento profundiza en los procesos analógicos que definieron la identidad sonora de una era.</p>
+            </div>
+
+            <div class="contenedor-video-fijo">
+                <video controls poster="imagen/thumbnail.jpeg">
+                    <source src="imagen/DOCU PARA WEB.mp4" type="video/mp4">
+                    Tu navegador no soporta video.
+                </video>
+            </div>
+        </div>
+    </section>
+
+    <script src="index.js"></script>
+</body>
+</html>
