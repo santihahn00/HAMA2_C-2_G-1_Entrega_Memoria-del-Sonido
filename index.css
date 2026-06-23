@@ -895,12 +895,11 @@ body {
     font-weight: 400;
 }
 /* ==========================================================================
-   📱 INTERFAZ STREAMING (REPLICA CD / DIGITAL) - AZUL Y AMARILLO
+   📱 INTERFAZ STREAMING (REPLICA CD / DIGITAL) - COMPLETO Y CORREGIDO V6
    ========================================================================== */
 
-/* Contenedor de la pantalla digital (Canvas de fondo) */
 .espacio-digital {
-    background-color: #020104; /* Fondo oscuro base */
+    background-color: #020104;
     position: relative;
     overflow: hidden;
 }
@@ -915,7 +914,7 @@ body {
     pointer-events: none;
 }
 
-/* Grilla principal en dos columnas */
+/* Grilla principal levantada para despejar la onda del canvas */
 .replica-digital-contenedor {
     position: relative;
     z-index: 30;
@@ -926,19 +925,121 @@ body {
     gap: 4rem;
     align-items: center;
     margin: 0 auto;
-    margin-top: -4rem; /* Desplazamiento hacia arriba para equilibrar la barra inferior */
+    margin-top: -18rem; /* Estructura empujada hacia arriba uniformemente */
 }
 
-/* --- Columna Izquierda: Textos Informativos --- */
-.columna-info-digital {
+/* --- MENÚ LATERAL DE ENLACES TEXTUALES --- */
+.menu-formatos-lateral {
+    position: fixed;
+    bottom: 130px; 
+    left: 3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    z-index: 95;
     text-align: left;
 }
 
+.btn-enlace-formato {
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.4);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 2px;
+    cursor: pointer;
+    text-align: left;
+    padding: 0;
+    transition: color 0.3s ease, padding-left 0.3s ease;
+}
+
+.btn-enlace-formato:hover {
+    color: #0066ff;
+    padding-left: 6px;
+}
+
+/* --- Columna Izquierda: Contenidos y Flujo --- */
+.columna-info-digital {
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Contenedor de digitalización */
+.bloque-digitalizacion-formatos {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.5rem 0;
+    margin-bottom: 2rem;
+    max-width: 480px;
+}
+
+.formato-viejo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+/* CORRECCIÓN: Alto contraste con brillo blanco directo */
+.img-formato-silueta {
+    width: 38px;
+    height: 38px;
+    object-fit: contain;
+    /* Fuerza a que la silueta sea blanca brillante con un leve resplandor */
+    filter: brightness(0) invert(1) drop-shadow(0 0 8px rgba(255, 255, 255, 0.5)); 
+    opacity: 1; 
+    transition: all 0.3s ease;
+}
+
+.formato-viejo:hover .img-formato-silueta {
+    /* Destello azul eléctrico al pasar el cursor */
+    filter: brightness(0) invert(1) sepia(1) saturate(5) hue-rotate(190deg) drop-shadow(0 0 12px #0066ff);
+}
+
+.formato-viejo span {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 1px;
+    color: rgba(255, 255, 255, 0.8); /* Texto más claro para mejor lectura */
+}
+
+.flecha-flujo {
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 0.8rem;
+}
+
+.flecha-flujo.destino {
+    color: #ffcc00;
+    animation: pulseFlecha 1s infinite alternate;
+}
+
+.badge-digital {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.7rem;
+    font-weight: bold;
+    color: #020104;
+    background: #ffcc00; 
+    padding: 0.4rem 0.7rem;
+    border-radius: 4px;
+    letter-spacing: 1px;
+    box-shadow: 0 0 12px rgba(255, 204, 0, 0.5);
+}
+
+@keyframes pulseFlecha {
+    0% { transform: translateX(0); opacity: 0.4; }
+    100% { transform: translateX(4px); opacity: 1; }
+}
+
+/* Textos informativos */
 .columna-info-digital .codigo-bites {
     font-family: monospace;
     color: #0066ff;
     letter-spacing: 2px;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
+    margin-bottom: 0.2rem;
 }
 
 .titulo-seccion-digital {
@@ -946,7 +1047,7 @@ body {
     font-weight: 700;
     font-size: 3.2rem !important;
     letter-spacing: 6px;
-    margin: 0.5rem 0;
+    margin: 0.2rem 0;
     color: #fff;
 }
 
@@ -955,7 +1056,7 @@ body {
     font-size: 1.4rem;
     color: #a3b8cc;
     letter-spacing: 3px;
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
 }
 
 .columna-info-digital .texto-futurista {
@@ -963,33 +1064,11 @@ body {
     max-width: 450px;
     font-size: 1.05rem;
     color: rgba(255, 255, 255, 0.8);
-    margin-bottom: 2.5rem;
+    margin: 0;
     line-height: 1.6;
 }
 
-/* Botón "Saber Más" en Azul Eléctrico */
-.btn-saber-mas {
-    background: transparent;
-    color: #fff;
-    border: 1px solid #0066ff;
-    border-radius: 30px;
-    padding: 0.8rem 2rem;
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 0.9rem;
-    letter-spacing: 2px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    transition: all 0.3s ease;
-}
-
-.btn-saber-mas:hover {
-    background: rgba(0, 102, 255, 0.2);
-    box-shadow: 0 0 15px rgba(0, 102, 255, 0.5);
-}
-
-/* --- Columna Derecha: El Teléfono y la Interfaz Interna --- */
+/* --- Columna Derecha: El Teléfono --- */
 .telefono-interfaz {
     position: relative;
     width: 100%;
@@ -1012,7 +1091,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding-left: 25%; /* Centra los elementos dentro de la pantalla del celular apaisado */
+    padding-left: 25%;
     gap: 2.5rem;
 }
 
@@ -1040,7 +1119,6 @@ body {
     margin: 0.2rem 0 0 0;
 }
 
-/* Icono Play Círculo en Amarillo Vibrante */
 .play-icono-circulo {
     width: 50px;
     height: 50px;
@@ -1055,7 +1133,6 @@ body {
     box-shadow: 0 0 10px rgba(255, 204, 0, 0.2);
 }
 
-/* Mini Ecualizador Puro CSS (Ondas) en Azul */
 .ondas-icono-animado {
     display: flex;
     align-items: flex-end;
@@ -1101,12 +1178,10 @@ body {
     padding: 0 3rem;
 }
 
-/* Bloque invisible que reemplaza al artista para mantener la barra simétrica */
 .espacio-vacio-izq {
     width: 25%;
 }
 
-/* Controles Centrales (Línea de tiempo y botones) */
 .controles-reproductor-central {
     display: flex;
     flex-direction: column;
@@ -1155,7 +1230,6 @@ body {
     border-radius: 2px;
 }
 
-/* Slider de Volumen Derecho */
 .controles-volumen-derecha {
     display: flex;
     align-items: center;
@@ -1176,12 +1250,181 @@ body {
     background: rgba(255, 255, 255, 0.2);
     border-radius: 2px;
 }
+#canvas-digital {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1; /* Bajamos el z-index para que actúe como papel tapiz de fondo */
+    pointer-events: none;
+}
 
-/* --- Reajuste de la navegación rápida interna --- */
-.espacio-digital #contenedor-mini-nav {
-    position: fixed;
-    bottom: 110px; /* Sube las tarjetas para que no queden tapadas por el reproductor */
+.replica-digital-contenedor {
+    position: relative;
+    z-index: 5; /* Asegura que la interfaz quede por encima de los dibujos del canvas */
+    /* ... el resto de tus estilos se mantienen iguales ... */
+}
+/* ==========================================================================
+   🛠️ REDISTRIBUCIÓN FINAL Y ESTILOS NEÓN (ESPACIO DIGITAL)
+   ========================================================================== */
+
+/* 1. Forzar el fondo oscuro para el contraste */
+.pantalla.espacio-digital {
+    background-color: #020104 !important; 
+    display: block !important; 
+    overflow: hidden;
+}
+
+/* 2. El lienzo de animación de fondo */
+#canvas-digital {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1 !important;
+    pointer-events: none;
+}
+
+/* 3. Contenedor principal de la información */
+.replica-digital-contenedor {
+    position: absolute;
+    top: 55%; 
     left: 50%;
-    transform: translateX(-50%);
-    z-index: 90;
+    transform: translate(-50%, -50%); 
+    width: 85%;
+    max-width: 1100px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 5 !important;
+}
+
+/* --- AJUSTE INTERNO DEL CELULAR (Mueve el contenido a la izquierda) --- */
+.contenido-pantalla-celular {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: 20px; /* Ajustá este valor si necesitás centrarlo aún más */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transform: translateX(-5px); /* Empuja levemente todo el contenido hacia la izquierda dentro del marco */
+}
+
+/* 4. Barra de navegación superior (Mismo alto y comportamiento) */
+#btn-cerrar-espacio {
+    position: absolute;
+    top: 30px;
+    right: 40px;
+    z-index: 10 !important;
+    background: transparent;
+    color: #00ff66; 
+    border: 1px solid rgba(0, 255, 102, 0.3);
+    padding: 10px 20px;
+    height: 42px; /* Forzamos la altura exacta */
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-family: monospace;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+}
+
+/* Esquina superior izquierda para los otros formatos */
+.menu-formatos-lateral {
+    position: absolute;
+    top: 30px; 
+    left: 40px;
+    display: flex;
+    flex-direction: row; 
+    gap: 15px;
+    z-index: 10 !important;
+    width: auto; /* Evita que se estire por toda la pantalla */
+}
+
+.btn-enlace-formato {
+    background: transparent;
+    color: #00ff66; 
+    border: 1px solid rgba(0, 255, 102, 0.3);
+    padding: 10px 20px;
+    height: 42px; /* Mismo alto exacto que el botón de cerrar */
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    font-family: monospace;
+    transition: all 0.3s ease;
+    white-space: nowrap; /* Evita saltos de línea internos */
+}
+
+/* Efecto de brillo verde neón al pasar el mouse */
+#btn-cerrar-espacio:hover,
+.btn-enlace-formato:hover {
+    color: #fff;
+    background: #00ff66;
+    border-color: #00ff66;
+    box-shadow: 0 0 20px #00ff66, 0 0 40px rgba(0, 255, 102, 0.6);
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+/* 5. Bloque de "digitalización" AGRANDADO y más abajo (cerca del reproductor) */
+.bloque-digitalizacion-formatos {
+    position: absolute;
+    bottom: -150px; /* Bajado más (antes -120px) para pegarlo a la barra de abajo */
+    left: 50%;
+    transform: translateX(-50%); /* Lo centra perfectamente en el eje X de la pantalla */
+    width: auto; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px; /* Más espacio entre elementos */
+    z-index: 6 !important;
+}
+
+/* Escalado de fuentes e imágenes dentro de digitalización */
+.bloque-digitalizacion-formatos .formato-viejo {
+    font-size: 1.1rem; /* Texto de los formatos más grande */
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.bloque-digitalizacion-formatos .img-formato-silueta {
+    width: 55px;  /* Siluetas de fotos más grandes */
+    height: 55px;
+    margin-bottom: 8px;
+}
+
+.bloque-digitalizacion-formatos .flecha-flujo {
+    font-size: 1.6rem; /* Flechas más grandes y visibles */
+    color: #00ff66;    /* Toque neón a las flechas */
+}
+
+.bloque-digitalizacion-formatos .badge-digital {
+    font-size: 1.2rem; /* El cartel de DIGITALIZADO se nota mucho más */
+    padding: 8px 16px;
+    border: 2px solid #00ff66;
+    box-shadow: 0 0 10px rgba(0, 255, 102, 0.3);
+}
+
+/* 6. Barra de reproducción inferior */
+.reproductor-barra-inferior.simun-player {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100vw;
+    height: 80px;
+    background-color: rgba(10, 10, 12, 0.95);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 40px;
+    z-index: 10 !important;
 }

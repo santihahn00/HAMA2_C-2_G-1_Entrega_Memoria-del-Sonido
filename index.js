@@ -172,7 +172,6 @@ function entrarAEspacio(id) {
         `;
     } 
     else if (id === 'cassette') {
-        // Reproducir sonido rápido de inserción mecánica si existe el archivo
         const audioClack = new Audio('sonido/clack-walkman.mp3');
         audioClack.volume = 0.6;
         audioClack.play().catch(() => {});
@@ -205,32 +204,62 @@ function entrarAEspacio(id) {
         `;
     } 
     else if (id === 'digital') {
-        // Apagamos cualquier rastro de audio ambiente
-        if (audioAmbienteEspacio) { audioAmbienteEspacio.pause(); }
+        try {
+            audioAmbienteEspacio = new Audio('sonido/encendido-digital.mp3');
+            audioAmbienteEspacio.volume = 0.4;
+            audioAmbienteEspacio.loop = true; 
+            audioAmbienteEspacio.currentTime = 0;
+            let playPromise = audioAmbienteEspacio.play();
+            if (playPromise !== undefined) {
+                playPromise.catch(() => { console.log("Audio esperando click para reproducir."); });
+            }
+        } catch(e) {
+            console.error("Error cargando sonido digital:", e);
+        }
 
         pEspacio.innerHTML = `
             <button class="btn-volver-hub-desde-espacio" id="btn-cerrar-espacio">← SYSTEM.EXIT()</button>
             <canvas id="canvas-digital"></canvas>
 
-            <!-- CONTENEDOR PRINCIPAL REPLICADO -->
+            <div class="menu-formatos-lateral">
+                <button class="btn-enlace-formato" onclick="entrarAEspacio('vinilo')">VINILO</button>
+                <button class="btn-enlace-formato" onclick="entrarAEspacio('cinta')">CINTA</button>
+                <button class="btn-enlace-formato" onclick="entrarAEspacio('cassette')">CASSETTE</button>
+            </div>
+
             <div class="replica-digital-contenedor">
-                
-                <!-- Columna Izquierda: Información Principal -->
                 <div class="columna-info-digital">
-                    <span class="codigo-bites">01000100 01001001 01000111 01001001</span>
+                    <div class="bloque-digitalizacion-formatos">
+                        <div class="formato-viejo">
+                            <img src="imagen/silueta-vinilo.png" alt="Vinilo" class="img-formato-silueta">
+                            <span>VINILO</span>
+                        </div>
+                        <div class="flecha-flujo">➔</div>
+                        <div class="formato-viejo">
+                            <img src="imagen/silueta-cinta.png" alt="Cinta" class="img-formato-silueta">
+                            <span>CINTA</span>
+                        </div>
+                        <div class="flecha-flujo">➔</div>
+                        <div class="formato-viejo">
+                            <img src="imagen/silueta-cassette.png" alt="Cassette" class="img-formato-silueta">
+                            <span>CASSETTE</span>
+                        </div>
+                        <div class="flecha-flujo destino">➔</div>
+                        <div class="concepto-digitalizado">
+                            <span class="badge-digital">DIGITALIZADO</span>
+                        </div>
+                    </div>
+
+                    <span class="codigo-bites">01000100 01001001 01000111 01001001 01010100 01000001 01001100</span>
                     <h2 class="titulo-seccion-digital">CD / DIGITAL</h2>
                     <h3 class="sub-seccion-digital">MÚSICA SIN LÍMITES</h3>
                     <p class="texto-futurista">Del disco físico al streaming. La era digital llevó toda la música a cualquier lugar del mundo al instante.</p>
-                    <button class="btn-saber-mas">SABER MÁS <span class="flecha-btn">▶</span></button>
                 </div>
 
-                <!-- Columna Derecha: El Teléfono / Interfaz -->
                 <div class="columna-mockup-digital">
                     <div class="telefono-interfaz">
                         <img src="imagen/celular-mockup.png" class="img-celular-marco" alt="Smartphone">
                         <div class="contenido-pantalla-celular">
-                            
-                            <!-- Bloque Calidad -->
                             <div class="bloque-cel-item">
                                 <div class="ondas-icono-animado">
                                     <span></span><span></span><span></span><span></span><span></span>
@@ -240,8 +269,6 @@ function entrarAEspacio(id) {
                                     <p>SONIDO LIMPIO</p>
                                 </div>
                             </div>
-
-                            <!-- Bloque Acceso -->
                             <div class="bloque-cel-item">
                                 <div class="play-icono-circulo">▶</div>
                                 <div class="texto-cel-item">
@@ -249,16 +276,13 @@ function entrarAEspacio(id) {
                                     <p>MILES DE CANCIONES AL INSTANTE</p>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- BARRA DE REPRODUCCIÓN INFERIOR (ESTÉTICA, SIN TEXTOS DE CANCIÓN) -->
             <div class="reproductor-barra-inferior simun-player">
-                <div class="espacio-vacio-izq"></div> <!-- Mantiene el equilibrio del diseño original -->
-
+                <div class="espacio-vacio-izq"></div>
                 <div class="controles-reproductor-central">
                     <div class="botones-control-row">
                         <button class="btn-control-audio shuffle">🔀</button>
@@ -271,58 +295,57 @@ function entrarAEspacio(id) {
                         <input type="range" class="input-progreso-audio" min="0" max="100" value="45">
                     </div>
                 </div>
-
                 <div class="controles-volumen-derecha">
                     <span class="icono-vol">🔊</span>
                     <input type="range" class="input-volumen-slider" min="0" max="1" step="0.1" value="0.7">
                 </div>
             </div>
-            
-            <div class="mini-navegacion" id="contenedor-mini-nav"></div>
         `;
 
-        // Ya no llamamos a la inicialización de controles interactivos de audio
         setTimeout(inicializarEfectoDigital, 100);
     }
 
     // --- ASIGNACIÓN DE EVENTOS INMEDIATA TRAS INYECTAR EL DOM ---
-    document.getElementById('btn-cerrar-espacio').addEventListener('click', () => {
-        pEspacio.className = 'pantalla';
-        if (audioAmbienteEspacio) { audioAmbienteEspacio.pause(); }
-        if (idAnimacionDigital) { cancelAnimationFrame(idAnimacionDigital); }
-        
-        // Reactivar el siseo analógico del Hub general si no se liberó el final
-        if (!laComparacionEstaLiberada && audioInicial) {
-            audioInicial.play().catch(() => {});
-        }
-        
-        setTimeout(() => { pHub.classList.add('activa'); }, 500);
-    });
+    const btnCerrar = document.getElementById('btn-cerrar-espacio');
+    if (btnCerrar) {
+        btnCerrar.addEventListener('click', () => {
+            pEspacio.className = 'pantalla';
+            if (audioAmbienteEspacio) { audioAmbienteEspacio.pause(); }
+            if (idAnimacionDigital) { cancelAnimationFrame(idAnimacionDigital); }
+            
+            if (!laComparacionEstaLiberada && audioInicial) {
+                audioInicial.play().catch(() => {});
+            }
+            setTimeout(() => { pHub.classList.add('activa'); }, 500);
+        });
+    }
 
     // --- CREACIÓN DINÁMICA DE LA MINI-NAVEGACIÓN INTERNA ---
     const miniNavContenedor = document.getElementById('contenedor-mini-nav');
-    Object.keys(formatosData).forEach(key => {
-        if (key !== id) {
-            const item = formatosData[key];
-            const miniCard = document.createElement('div');
-            miniCard.className = 'mini-tarjeta';
-            miniCard.innerHTML = `
-                <div class="mini-caja-img"><img src="${item.img}" alt="${item.nombre}"></div>
-                <h4>${item.nombre}</h4>
-            `;
-            miniCard.addEventListener('click', (e) => {
-                e.stopPropagation();
-                entrarAEspacio(key);
-            });
-            miniNavContenedor.appendChild(miniCard);
-        }
-    });
+    if (miniNavContenedor) {
+        Object.keys(formatosData).forEach(key => {
+            if (key !== id) {
+                const item = formatosData[key];
+                const miniCard = document.createElement('div');
+                miniCard.className = 'mini-tarjeta';
+                miniCard.innerHTML = `
+                    <div class="mini-caja-img"><img src="${item.img}" alt="${item.nombre}"></div>
+                    <h4>${item.nombre}</h4>
+                `;
+                miniCard.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    entrarAEspacio(key);
+                });
+                miniNavContenedor.appendChild(miniCard);
+            }
+        });
+    }
 
     comprobarProgresoFormatos();
     setTimeout(() => { pEspacio.classList.add('activa'); }, 150);
 }
 
-// --- 🎮 MOTOR GRÁFICO DIGITAL (CANVAS) ---
+// --- 🎮 MOTOR GRÁFICO DIGITAL (CANVAS) - ¡ÚNICA VERSIÓN LIMPIA! ---
 function inicializarEfectoDigital() {
     const canvas = document.getElementById('canvas-digital');
     if (!canvas) return;
@@ -334,27 +357,24 @@ function inicializarEfectoDigital() {
     let particulas = [];
     let tiempo = 0;
 
-    // Generar partículas
-    for (let i = 0; i < 130; i++) {
+    for (let i = 0; i < 60; i++) {
         particulas.push({
             x: Math.random() * canvas.width,
             y: Math.random() * canvas.height,
-            vx: (Math.random() - 0.5) * 1.5,
-            vy: (Math.random() - 0.5) * 1.5,
-            size: Math.random() * 2.5 + 1,
-            // 50% Azul brillante, 50% Amarillo vibrante
+            vx: (Math.random() - 0.5) * 1.2,
+            vy: (Math.random() - 0.5) * 1.2,
+            size: Math.random() * 2 + 1,
             color: Math.random() < 0.5 ? '#0066ff' : '#ffcc00', 
-            alpha: Math.random() * 0.6 + 0.2
+            alpha: Math.random() * 0.5 + 0.1
         });
     }
 
     function animar() {
-        ctx.fillStyle = 'rgba(2, 1, 4, 0.15)'; // Fondo oscuro con un sutil tinte azul profundo
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        // SOLUCIÓN DEFINITIVA: clearRect limpia píxeles sin pintar un fondo sólido encima
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
         
         tiempo += 0.03;
 
-        // Renderizar partículas flotantes
         particulas.forEach(p => {
             p.x += p.vx;
             p.y += p.vy;
@@ -368,13 +388,12 @@ function inicializarEfectoDigital() {
             ctx.fillRect(p.x, p.y, p.size, p.size); 
         });
 
-        // Dibujar la onda senoidal central en color Azul Brillante con brillo neón
-        ctx.globalAlpha = 1.0;
+        ctx.globalAlpha = 0.4; // Subido de 0.15 a 0.4 para darle más color
         ctx.beginPath();
-        ctx.lineWidth = 2;
+        ctx.lineWidth = 2.5;    // Subido de 1.5 a 2.5 para que sea más gruesa
         ctx.strokeStyle = '#0066ff'; 
-        ctx.shadowBlur = 15;
-        ctx.shadowColor = '#0066ff';
+        ctx.shadowBlur = 8;     // Subido de 4 a 8 para darle más brillo neón
+        ctx.shadowColor = '#0066ff'
 
         for (let x = 0; x < canvas.width; x += 2) {
             const y = canvas.height / 2 + 
@@ -385,7 +404,8 @@ function inicializarEfectoDigital() {
             else ctx.lineTo(x, y);
         }
         ctx.stroke();
-        ctx.shadowBlur = 0; // Resetear sombras para optimizar rendimiento
+        ctx.shadowBlur = 0; 
+        ctx.globalAlpha = 1.0;
 
         idAnimacionDigital = requestAnimationFrame(animar);
     }
@@ -399,7 +419,6 @@ function comprobarProgresoFormatos() {
     if (todosVisitados && !laComparacionEstaLiberada) {
         laComparacionEstaLiberada = true;
         
-        // Quitar candado visual
         tarjetaIncognita.classList.remove('bloqueado');
         tarjetaIncognita.innerHTML = `<div class="signo" style="color: #00ff66; font-weight: bold;">!</div>`;
         
@@ -446,17 +465,19 @@ function inicializarVideosInteractivos() {
 }
 
 // Volver al Hub desde la pantalla final
-document.getElementById('btn-regresar-a-hub').addEventListener('click', () => {
-    pFinal.classList.remove('activa');
-    
-    // Apagar videos y audios que puedan estar reproduciéndose
-    document.querySelectorAll('.cuadrante-interactivo video').forEach(v => v.pause());
-    Object.keys(formatosData).forEach(key => {
-        const aud = document.getElementById(`audio-final-${key}`);
-        if(aud) aud.pause();
+const btnRegresar = document.getElementById('btn-regresar-a-hub');
+if (btnRegresar) {
+    btnRegresar.addEventListener('click', () => {
+        pFinal.classList.remove('activa');
+        
+        document.querySelectorAll('.cuadrante-interactivo video').forEach(v => v.pause());
+        Object.keys(formatosData).forEach(key => {
+            const aud = document.getElementById(`audio-final-${key}`);
+            if(aud) aud.pause();
+        });
+        
+        setTimeout(() => {
+            pHub.classList.add('activa');
+        }, 600);
     });
-    
-    setTimeout(() => {
-        pHub.classList.add('activa');
-    }, 600);
-});
+}
