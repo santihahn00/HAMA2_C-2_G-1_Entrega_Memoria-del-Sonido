@@ -137,7 +137,7 @@ function entrarAEspacio(id) {
                         <div class="marco-rustico"><img src="imagen/ambiente1.jpg" alt="Estudio antiguo"></div>
                     </div>
                     <div class="columna-texto">
-                        <p class="texto-maquina">LA ERA INDUSTRIAL DEL SONIDO. LA CAPTURA ASUME UN CUERPO FÍSICO DE ÓXIDO DE HIERRO Y PLÁSTICO. LA MÚSICA SE CONVIERTE EN UNA CINTA QUE CORRE INTERMINABLE ANTE CABEZALES MAGNÉTICOS, REGISTRANDO LA VIBRACIÓN DEL AIRE EN IMPERFECCIONES MECÁNICAS ENTRAÑABLES.</p>
+                        <p class="texto-maquina">LA ERA INDUSTRIAL DEL SONIDO. LA CAPTURA ASUME UN CUERPO FÍSICO DE ÓXIDO DE HIERRO Y PLÁSTICO. LA MÚSICA SE CONVIERTE EN UNA CINTA QUE CORRE INTERMINABLE ANTE CABEZALES MAGNÉTICOS, REGISTRANDO LA VIBRACIÓN DEL AIRE IN IMPERFECCIONES MECÁNICAS ENTRAÑABLES.</p>
                     </div>
                 </div>
                 <div class="mini-navegacion" id="contenedor-mini-nav"></div>
@@ -184,25 +184,62 @@ function entrarAEspacio(id) {
         }
 
         pEspacio.innerHTML = `
-            <button class="btn-volver-hub-desde-espacio" id="btn-cerrar-espacio">← STOP / EJECT</button>
-            <img src="imagen/cinta.png" class="sticker s1" alt="sticker" style="opacity:0.15;">
             <div class="cultura-cassette-contenedor">
-                <header class="bloque-titulo-cassette">
-                    <span class="lado-a">LADO A // MIXTAPE URBAN</span>
-                    <h2>Cassette</h2>
-                </header>
-                <div class="cuerpo-cassette">
-                    <div class="columna-galeria-cassette">
-                        <div class="cuadro-skate"><img src="imagen/cassette.png" alt="Cassette Tape"></div>
-                    </div>
-                    <div class="columna-texto-cassette">
-                        <p class="texto-pixel">EL SONIDO SE HACE PORTÁTIL, REBELDE Y PROPIO. GRABAR DE LA RADIO, ESCRIBIR LA ETIQUETA A MANO CON MARCADOR Y SALIR A LA CALLE. LA LIBERTAD DE LLEVAR TU MÚSICA EN EL BOLSILLO BAJO LAS LUCES NEÓN DE LA CIUDAD ENREDA LA CINTA CON UNA BIROME.</p>
-                    </div>
+                
+                <div class="barra-navegacion-superior">
+                    <div class="mini-navegacion-nombres" id="contenedor-mini-nav"></div>
+                    <button class="btn-volver-hub-desde-espacio" id="btn-cerrar-espacio">← STOP / EJECT</button>
                 </div>
-                <div class="mini-navegacion" id="contenedor-mini-nav"></div>
+
+                <div class="grilla-fanzine-cassette">
+                    
+                    <div class="col-fanzine-izq">
+                        <header class="bloque-titulo-cassette-fanzine">
+                            <span class="subtitulo-fanzine">PORTÁTIL Y REBELDE</span>
+                            <h2>CASSETTE</h2>
+                        </header>
+                        <div class="bloque-parrafo-fanzine">
+                            <p>EL SONIDO SE HACE PORTÁTIL, REBELDE Y PROPIO. GRABAR DE LA RADIO, ESCRIBIR LA ETIQUETA A MANO CON MARCADOR Y SALIR A LA CALLE. LA LIBERTAD DE LLEVAR TU MÚSICA EN EL BOLSILLO BAJO LAS LUCES DE LA CIUDAD ENREDA LA CINTA CON UNA BIROME.</p>
+                        </div>
+                    </div>
+
+                    <div class="col-fanzine-centro">
+                        <div class="contenedor-cassette-img-fanzine">
+                            <img src="imagen/dibujo-cassette.png" alt="Cassette Amarillo" class="img-cassette-fanzine">
+                        </div>
+                    </div>
+
+                    <div class="col-fanzine-der">
+                        <ul class="lista-caracteristicas-cassette">
+                            <li><span class="marcador-vinculo">➔</span> SOPLIDO DE FONDO</li>
+                            <li><span class="marcador-vinculo">➔</span> CLICK AL PRESIONAR PLAY</li>
+                            <li><span class="marcador-vinculo">➔</span> RUIDO DEL MECANISMO</li>
+                        </ul>
+                    </div>
+
+                </div>
+
+                <footer class="footer-fanzine-walkman">
+                    <div class="espacio-vacio-izq"></div> <div class="reproductor-walkman-fisico">
+                        <div class="controles-mecanicos-botones">
+                            <button class="btn-walkman-mecanico btn-w-prev">◀◀</button>
+                            <button class="btn-walkman-mecanico btn-w-play-active">● PLAY</button>
+                            <button class="btn-walkman-mecanico btn-w-stop">■ STOP</button>
+                            <button class="btn-walkman-mecanico btn-w-next">▶▶</button>
+                        </div>
+                        <div class="ventana-cinta-girando">
+                            <div class="carrete-izq"></div>
+                            <div class="carrete-der"></div>
+                        </div>
+                    </div>
+
+                    <div class="contenedor-walkman-auriculares">
+                        <img src="imagen/walkman-auriculares.png" alt="Walkman con auriculares" class="img-walkman-retro">
+                    </div>
+                </footer>
             </div>
         `;
-    } 
+    }
     else if (id === 'digital') {
         try {
             audioAmbienteEspacio = new Audio('sonido/encendido-digital.mp3');
@@ -244,7 +281,7 @@ function entrarAEspacio(id) {
                             <img src="imagen/silueta-cassette.png" alt="Cassette" class="img-formato-silueta">
                             <span>CASSETTE</span>
                         </div>
-                        <div class="flecha-flujo destino">➔</div>
+                        <div class="flecha-flujo">➔</div>
                         <div class="concepto-digitalizado">
                             <span class="badge-digital">DIGITALIZADO</span>
                         </div>
@@ -323,22 +360,41 @@ function entrarAEspacio(id) {
     // --- CREACIÓN DINÁMICA DE LA MINI-NAVEGACIÓN INTERNA ---
     const miniNavContenedor = document.getElementById('contenedor-mini-nav');
     if (miniNavContenedor) {
-        Object.keys(formatosData).forEach(key => {
-            if (key !== id) {
-                const item = formatosData[key];
-                const miniCard = document.createElement('div');
-                miniCard.className = 'mini-tarjeta';
-                miniCard.innerHTML = `
-                    <div class="mini-caja-img"><img src="${item.img}" alt="${item.nombre}"></div>
-                    <h4>${item.nombre}</h4>
-                `;
-                miniCard.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    entrarAEspacio(key);
-                });
-                miniNavContenedor.appendChild(miniCard);
-            }
-        });
+        // SI ESTAMOS EN CASSETTE:
+        if (id === 'cassette') {
+            Object.keys(formatosData).forEach(key => {
+                if (key !== id) {
+                    const item = formatosData[key];
+                    const btnLateral = document.createElement('button');
+                    btnLateral.className = 'btn-mini-nav-cassette'; 
+                    btnLateral.textContent = item.nombre.toUpperCase();
+                    btnLateral.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        entrarAEspacio(key);
+                    });
+                    miniNavContenedor.appendChild(btnLateral);
+                }
+            });
+        } 
+        // SI ESTAMOS EN OTROS ESPACIOS: Mantiene las mini-tarjetas normales
+        else {
+            Object.keys(formatosData).forEach(key => {
+                if (key !== id) {
+                    const item = formatosData[key];
+                    const miniCard = document.createElement('div');
+                    miniCard.className = 'mini-tarjeta';
+                    miniCard.innerHTML = `
+                        <div class="mini-caja-img"><img src="${item.img}" alt="${item.nombre}"></div>
+                        <h4>${item.nombre}</h4>
+                    `;
+                    miniCard.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        entrarAEspacio(key);
+                    });
+                    miniNavContenedor.appendChild(miniCard);
+                }
+            });
+        }
     }
 
     comprobarProgresoFormatos();
@@ -357,24 +413,20 @@ function inicializarEfectoDigital() {
     let particulas = [];
     let tiempo = 0;
 
-    // INCREMENTO DE PARTÍCULAS: Subido de 60 a 200 para poblar más el fondo
     for (let i = 0; i < 200; i++) {
         particulas.push({
             x: Math.random() * canvas.width,
             y: Math.random() * canvas.height,
-            vx: (Math.random() - 0.5) * 1.5, // Un toque extra de dinamismo en velocidad
+            vx: (Math.random() - 0.5) * 1.5, 
             vy: (Math.random() - 0.5) * 1.5,
             size: Math.random() * 2.5 + 1,
-            // CAMBIO DE COLOR: Reemplazado el amarillo (#ffcc00) por el verde neón (#00ff66)
             color: Math.random() < 0.5 ? '#0066ff' : '#00ff66', 
             alpha: Math.random() * 0.6 + 0.1
         });
     }
 
     function animar() {
-        // SOLUCIÓN DEFINITIVA: clearRect limpia píxeles sin pintar un fondo sólido encima
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        
         tiempo += 0.03;
 
         particulas.forEach(p => {
@@ -390,11 +442,11 @@ function inicializarEfectoDigital() {
             ctx.fillRect(p.x, p.y, p.size, p.size); 
         });
 
-        ctx.globalAlpha = 0.4; // Subido de 0.15 a 0.4 para darle más color
+        ctx.globalAlpha = 0.4; 
         ctx.beginPath();
-        ctx.lineWidth = 2.5;    // Subido de 1.5 a 2.5 para que sea más gruesa
+        ctx.lineWidth = 2.5;    
         ctx.strokeStyle = '#0066ff'; 
-        ctx.shadowBlur = 8;     // Subido de 4 a 8 para darle más brillo neón
+        ctx.shadowBlur = 8;     
         ctx.shadowColor = '#0066ff'
 
         for (let x = 0; x < canvas.width; x += 2) {

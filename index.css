@@ -653,137 +653,331 @@ body {
     }
 }
 /* ==========================================================================
-   🛹 DISEÑO CONCEPTUAL: SONIDO CALLEJERO (CASSETTE)
+   📼 ESTILO FANZINE EDITORIAL (SECCIÓN CASSETTE) - REPLICA EXACTA DE COMPOSICIÓN
    ========================================================================== */
 
-/* Fondo gris plástico oscuro / grafiti texturado */
 .espacio-cassette {
-    background-color: #18191d !important;
-    color: #00ffff !important; /* Azul Cian Neón brillante */
+    background-image: url('imagen/fondo-cassette.png') !important;
+    background-size: cover !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
 }
 
-/* Contenedor saturado, ruidoso y desalineado */
+/* Contenedor principal de la pantalla del Cassette */
 .cultura-cassette-contenedor {
-    width: 85%;
-    max-width: 1050px;
-    height: 85vh;
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    padding: 2rem 4rem;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 2rem;
-    position: relative;
+    overflow: hidden;
     z-index: 50;
 }
 
-.bloque-titulo-cassette {
-    text-align: left;
-    transform: rotate(-1.5deg); /* Título ligeramente torcido y desprolijo */
-}
-
-.lado-a {
-    font-family: 'VT323', monospace;
-    font-size: 1.4rem;
-    color: #ff007f; /* Rosa Fucsia Neón */
-    letter-spacing: 2px;
-}
-
-.bloque-titulo-cassette h2 {
-    font-family: 'Permanent Marker', cursive !important;
-    font-size: 4rem !important;
-    color: #ffffff;
-    text-shadow: 3px 3px 0px #ff007f, -3px -3px 0px #00ffff; /* Efecto glitch/neón impreso */
-    margin-top: 0.2rem;
-    text-transform: uppercase;
-}
-
-/* Grilla asimétrica */
-.cuerpo-cassette {
-    display: grid;
-    grid-template-columns: 1.7fr 1.3fr;
-    gap: 4rem;
-    align-items: center;
-}
-
-/* Cajas de imágenes estilo collage callejero */
-.columna-galeria-cassette {
+/* --- BARRA DE NAVEGACIÓN SUPERIOR UNIFICADA (EJE Y COMPARTIDO) --- */
+.barra-navegacion-superior {
+    width: 100%;
     display: flex;
+    justify-content: space-between; /* Empuja la mini-nav a la izquierda y Stop/Eject a la derecha */
+    align-items: center;           /* Los centra perfectamente en el mismo eje Y */
+    padding: 20px 40px;            /* Margen interno para que no peguen al borde de la pantalla */
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 10;
+}
+
+/* Contenedor de los botones de formatos (Esquina izquierda) */
+#contenedor-mini-nav.mini-navegacion-nombres {
+    display: flex;
+    flex-direction: row;           /* Fuerza a que se pongan uno al lado del otro */
+    gap: 15px;                     /* Separación horizontal entre los botones */
+}
+
+/* Estilos para los botones horizontales de formatos en Cassette */
+.btn-mini-nav-cassette {
+    background: transparent;
+    color: var(--crema-texto);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    padding: 8px 16px;
+    font-family: 'Special Elite', monospace; /* Tipografía estilo máquina de escribir para Cassette */
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.btn-mini-nav-cassette:hover {
+    background-color: var(--crema-texto);
+    color: var(--color-cassette); /* Invierte los colores al pasar el cursor */
+    border-color: var(--crema-texto);
+}
+
+/* Estabilizar el botón STOP / EJECT (Esquina derecha) */
+.barra-navegacion-superior .btn-volver-hub-desde-espacio {
+    margin: 0; /* Removemos márgenes innecesarios que alteren el eje Y */
+    padding: 8px 16px;
+    font-family: 'Special Elite', monospace;
+    font-size: 0.9rem;
+}
+.espacio-cassette .mini-tarjeta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    
+    /* Forzado de color Fanzine (Fondo Negro, Texto Blanco) */
+    background-color: #000000 !important;
+    color: #ffffff !important;
+    border: 2px solid #000000 !important;
+    
+    /* Tipografía y dimensiones idénticas a las del botón Hub derecho */
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    
+    /* Reseteo estricto de alturas */
+    height: auto !important;
+    min-height: 0 !important;
+    padding: 8px 16px !important; /* Altura idéntica y exacta al de Hub */
+    line-height: normal !important;
+    border-radius: 0px !important; 
+    
+    cursor: pointer;
+    box-shadow: none !important;
+    text-shadow: none !important;
+    transition: background-color 0.2s ease;
+}
+
+/* PEGÁ ESTO EN SU LUGAR: */
+.espacio-cassette .btn-enlace-formato {
+    background-color: #000000 !important;
+    color: #ffffff !important;
+    border: 2px solid #000000 !important;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 10px 20px !important;
+    cursor: pointer;
+    border-radius: 0px !important;
+    text-align: center;
+    width: 140px; 
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.espacio-cassette .btn-enlace-formato:hover {
+    background-color: #222222 !important;
+    border-color: #222222 !important;
+    transform: scale(1.05);
+}
+
+/* El botón de salida en la esquina superior derecha */
+.espacio-cassette .btn-volver-hub-desde-espacio {
+    background-color: #000000 !important;
+    color: #ffffff !important;
+    border: 2px solid #000000 !important;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    padding: 8px 16px;
+    line-height: normal;
+    box-shadow: none !important;
+    text-shadow: none !important;
+    border-radius: 0px !important;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+.espacio-cassette .btn-enlace-formato:hover {
+    background-color: #222222 !important;
+    border-color: #222222 !important;
+    transform: scale(1.05);
+}
+
+/* Grilla de Tres Columnas - Ampliada la columna del medio significativamente */
+.grilla-fanzine-cassette {
+    display: grid;
+    grid-template-columns: 0.8fr 1.8fr 0.8fr; /* Le quitamos peso a los lados para dárselo al cassette */
+    gap: 2rem;
+    align-items: center;
+    width: 100%;
+    margin-top: 2vh;
+    z-index: 10;
+}
+
+/* --- COLUMNA IZQUIERDA: Bloque de Textos Narrativos --- */
+.col-fanzine-izq {
+    display: flex;
+    flex-direction: column;
     gap: 1.5rem;
+    text-align: left;
+}
+.bloque-titulo-cassette-fanzine {
+    transform: rotate(-1.5deg);
+}
+.bloque-titulo-cassette-fanzine .subtitulo-fanzine {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    color: #111111;
+    display: block;
+}
+.bloque-titulo-cassette-fanzine h2 {
+    font-family: 'Permanent Marker', cursive !important;
+    font-size: 5.5rem !important;
+    font-weight: bold !important;
+    color: #000000 !important;
+    line-height: 0.9 !important;
+    margin: 0;
+    text-shadow: none !important;
+}
+.bloque-parrafo-fanzine {
+    background: #000000;
+    padding: 1.5rem;
+    border-radius: 4px;
+    box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.2);
     transform: rotate(1deg);
 }
-
-.cuadro-skate {
-    border: 3px solid #ff007f;
-    background-color: #000;
-    padding: 4px;
-    width: 250px;
-    height: 250px;
-    box-shadow: 6px 6px 0px #00ffff; /* Sombra sólida desalineada */
-}
-
-.cuadro-skate img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    filter: saturate(1.6) contrast(1.2); /* Satura las fotos urbanas */
-}
-
-/* Texto estilo pantalla digital/píxel de los 80 */
-.columna-texto-cassette {
-    text-align: left;
-    background-color: rgba(0, 0, 0, 0.7);
-    padding: 1.5rem;
-    border: 2px solid #00ffff;
-}
-
-.texto-pixel {
-    font-family: 'VT323', monospace;
-    font-size: 1.4rem;
+.bloque-parrafo-fanzine p {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.85rem;
     line-height: 1.6;
     color: #ffffff;
-    letter-spacing: 1px;
+    text-align: justify;
+    margin: 0;
 }
 
-/* Stickers virtuales superpuestos */
-.sticker {
-    position: absolute;
-    width: 100px;
+/* --- COLUMNA CENTRAL: Ilustración del Cassette Amarillo (Solución de Escalado) --- */
+.col-fanzine-centro {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    margin-top: 40px;
+}
+.contenedor-cassette-img-fanzine {
+    width: 140%; /* Un valor intermedio controlado para romper los límites laterales */
+    max-width: 850px; 
+    /* Usamos scale(1.35) combinado con la rotación para forzar un tamaño gigante real en pantalla */
+    transform: rotate(-10deg) scale(1.35); 
+    filter: drop-shadow(15px 20px 15px rgba(0, 0, 0, 0.35));
+    z-index: 20;
+}
+.img-cassette-fanzine {
+    width: 100%;
     height: auto;
-    z-index: 60;
-    pointer-events: none;
-    filter: drop-shadow(3px 3px 0px rgba(0,0,0,0.5));
-}
-.sticker.s1 { top: 12%; right: 15%; transform: rotate(15deg); width: 110px; }
-.sticker.s2 { bottom: 25%; left: 8%; transform: rotate(-10deg); }
-
-/* Customización de botones y navegación para Cassette */
-.espacio-cassette .btn-volver-hub-desde-espacio {
-    background-color: #ff007f;
-    color: #ffffff;
-    border: 3px solid #ffffff;
-    font-family: 'VT323', monospace;
-    font-size: 1.2rem;
-    box-shadow: 4px 4px 0px #000;
-    transition: transform 0.1s ease, box-shadow 0.1s ease;
+    display: block;
 }
 
-/* Simulación de botón físico de Walkman que se hunde */
-.espacio-cassette .btn-volver-hub-desde-espacio:active {
-    transform: translate(4px, 4px);
-    box-shadow: 0px 0px 0px #000;
+/* --- COLUMNA DERECHA: Listado estilo marcador manual --- */
+.col-fanzine-der {
+    display: flex;
+    justify-content: flex-start;
+    padding-left: 1.5rem;
+    margin-top: 55px;
+}
+.lista-caracteristicas-cassette {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    transform: rotate(2deg);
+}
+.lista-caracteristicas-cassette li {
+    font-family: 'Permanent Marker', cursive, sans-serif;
+    font-size: 1.4rem; 
+    color: #111111;
+    margin-bottom: 1.2rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.lista-caracteristicas-cassette li .marcador-vinculo {
+    color: #000000;
+    font-size: 1rem;
 }
 
-.espacio-cassette .mini-tarjeta {
-    border: 2px dashed #ff007f !important;
-    background-color: #111;
-    color: #ffffff;
+/* --- SECCIÓN INFERIOR: Footer Walkman --- */
+.footer-fanzine-walkman {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1.2fr 1fr;
+    align-items: flex-end;
+    gap: 2rem;
+    margin-bottom: 2vh;
+    z-index: 15;
 }
-.espacio-cassette .mini-tarjeta:hover {
-    border-style: solid !important;
-    border-color: #00ffff !important;
+.espacio-vacio-izq {
+    width: 100%;
 }
-.espacio-cassette .mini-tarjeta h4 {
-    font-family: 'VT323', monospace;
-    font-size: 0.9rem;
+
+/* Reproductor de Cinta Físico estilo Walkman */
+.reproductor-walkman-fisico {
+    background: #222222;
+    border: 4px solid #000000;
+    padding: 12px;
+    box-shadow: 8px 8px 0px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border-radius: 6px;
+    pointer-events: none; 
+    user-select: none;
+}
+.controles-mecanicos-botones {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+}
+.btn-walkman-mecanico {
+    background: #dddddd;
+    border: 2px solid #000000;
+    border-bottom-width: 5px; 
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.75rem;
+    font-weight: bold;
+    padding: 6px 12px;
+    color: #000000;
+    cursor: default; 
+}
+.btn-walkman-mecanico:active, .btn-w-play-active {
+    border-bottom-width: 5px !important; 
+    transform: none !important;          
+    background: #000000 !important;      
+    color: #ffffff !important;
+}
+.ventana-cinta-girando {
+    height: 35px;
+    background: #111111;
+    border: 2px solid #000000;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-radius: 4px;
+}
+.carrete-izq, .carrete-der {
+    width: 16px;
+    height: 16px;
+    border: 3px dashed #ffffff;
+    border-radius: 50%;
+    animation: girarCarrete 3s linear infinite;
+}
+@keyframes girarCarrete {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Imagen del Walkman Retro (Esquina Derecha) */
+.contenedor-walkman-auriculares {
+    display: flex;
+    justify-content: flex-end;
+}
+.img-walkman-retro {
+    width: 500px; /* Se respeta el tamaño gigante asignado */
+    height: auto;
+    filter: drop-shadow(5px 5px 8px rgba(0,0,0,0.3));
 }
 /* ==========================================================================
    🌐 DISEÑO CONCEPTUAL: LA METAMORFOSIS INMATERIAL (DIGITAL)
