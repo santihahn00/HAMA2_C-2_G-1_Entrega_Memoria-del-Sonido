@@ -1012,7 +1012,7 @@ body {
 }
 
 .flecha-flujo.destino {
-    color: #ffcc00;
+    color: #00ff66;
     animation: pulseFlecha 1s infinite alternate;
 }
 
@@ -1021,11 +1021,11 @@ body {
     font-size: 0.7rem;
     font-weight: bold;
     color: #020104;
-    background: #ffcc00; 
+    background: #00ff66 !important; /* ← Cambiado de amarillo a verde */
     padding: 0.4rem 0.7rem;
     border-radius: 4px;
     letter-spacing: 1px;
-    box-shadow: 0 0 12px rgba(255, 204, 0, 0.5);
+    box-shadow: 0 0 12px rgba(0, 255, 102, 0.5) !important; /* ← Sombra en verde */
 }
 
 @keyframes pulseFlecha {
@@ -1085,7 +1085,7 @@ body {
 .contenido-pantalla-celular {
     position: absolute;
     top: 0;
-    left: 0;
+    left: 00;
     width: 100%;
     height: 100%;
     display: flex;
@@ -1122,15 +1122,15 @@ body {
 .play-icono-circulo {
     width: 50px;
     height: 50px;
-    border: 2px solid #ffcc00;
+    border: 2px solid #00ff66 !important; /* ← Cambiado de amarillo a verde */
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #ffcc00;
+    color: #00ff66 !important; /* ← Cambiado de amarillo a verde */
     font-size: 0.8rem;
     padding-left: 3px;
-    box-shadow: 0 0 10px rgba(255, 204, 0, 0.2);
+    box-shadow: 0 0 10px rgba(0, 255, 102, 0.2) !important; /* ← Sombra en verde */
 }
 
 .ondas-icono-animado {
@@ -1308,12 +1308,13 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    padding: 20px; /* Ajustá este valor si necesitás centrarlo aún más */
+    /* Aumentamos el padding izquierdo de 45px a 65px para empujarlo a la derecha */
+    padding: 20px 20px 20px 65px !important; 
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
-    transform: translateX(-5px); /* Empuja levemente todo el contenido hacia la izquierda dentro del marco */
+    align-items: flex-start !important; 
+    transform: translateX(0) !important; 
 }
 
 /* 4. Barra de navegación superior (Mismo alto y comportamiento) */
@@ -1373,18 +1374,19 @@ body {
     text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 }
 
-/* 5. Bloque de "digitalización" AGRANDADO y más abajo (cerca del reproductor) */
+/* 5. Bloque de "digitalización" AGRANDADO y pegado sobre la barra de reproducción */
 .bloque-digitalizacion-formatos {
-    position: absolute;
-    bottom: -150px; /* Bajado más (antes -120px) para pegarlo a la barra de abajo */
-    left: 50%;
-    transform: translateX(-50%); /* Lo centra perfectamente en el eje X de la pantalla */
-    width: auto; 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 20px; /* Más espacio entre elementos */
-    z-index: 6 !important;
+    position: fixed !important;   /* Cambiado a fixed para que dependa de la pantalla */
+    bottom: -350px !important;      /* Se apoya exactamente arriba de los 80px del reproductor */
+    left: 50% !important;
+    transform: translateX(-50%) !important; /* Centrado horizontal perfecto */
+    width: max-content !important; 
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 20px !important; 
+    z-index: 99 !important;        /* Por encima del canvas pero abajo de la barra */
+    margin-bottom: 0 !important;   /* Reseteamos márgenes residuales */
 }
 
 /* Escalado de fuentes e imágenes dentro de digitalización */

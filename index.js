@@ -357,15 +357,17 @@ function inicializarEfectoDigital() {
     let particulas = [];
     let tiempo = 0;
 
-    for (let i = 0; i < 60; i++) {
+    // INCREMENTO DE PARTÍCULAS: Subido de 60 a 200 para poblar más el fondo
+    for (let i = 0; i < 200; i++) {
         particulas.push({
             x: Math.random() * canvas.width,
             y: Math.random() * canvas.height,
-            vx: (Math.random() - 0.5) * 1.2,
-            vy: (Math.random() - 0.5) * 1.2,
-            size: Math.random() * 2 + 1,
-            color: Math.random() < 0.5 ? '#0066ff' : '#ffcc00', 
-            alpha: Math.random() * 0.5 + 0.1
+            vx: (Math.random() - 0.5) * 1.5, // Un toque extra de dinamismo en velocidad
+            vy: (Math.random() - 0.5) * 1.5,
+            size: Math.random() * 2.5 + 1,
+            // CAMBIO DE COLOR: Reemplazado el amarillo (#ffcc00) por el verde neón (#00ff66)
+            color: Math.random() < 0.5 ? '#0066ff' : '#00ff66', 
+            alpha: Math.random() * 0.6 + 0.1
         });
     }
 
