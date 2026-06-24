@@ -201,6 +201,10 @@ function entrarAEspacio(id) {
                         <div class="bloque-parrafo-fanzine">
                             <p>EL SONIDO SE HACE PORTÁTIL, REBELDE Y PROPIO. GRABAR DE LA RADIO, ESCRIBIR LA ETIQUETA A MANO CON MARCADOR Y SALIR A LA CALLE. LA LIBERTAD DE LLEVAR TU MÚSICA EN EL BOLSILLO BAJO LAS LUCES DE LA CIUDAD ENREDA LA CINTA CON UNA BIROME.</p>
                         </div>
+
+                        <div class="lista-esquina-cassette">
+                            <img src="imagen/lista-cassettes.png" alt="Lista de Cassettes">
+                        </div>
                     </div>
 
                     <div class="col-fanzine-centro">
@@ -220,7 +224,8 @@ function entrarAEspacio(id) {
                 </div>
 
                 <footer class="footer-fanzine-walkman">
-                    <div class="espacio-vacio-izq"></div> <div class="reproductor-walkman-fisico">
+                    <div class="espacio-vacio-izq"></div> 
+                    <div class="reproductor-walkman-fisico">
                         <div class="controles-mecanicos-botones">
                             <button class="btn-walkman-mecanico btn-w-prev">◀◀</button>
                             <button class="btn-walkman-mecanico btn-w-play-active">● PLAY</button>
@@ -240,7 +245,7 @@ function entrarAEspacio(id) {
             </div>
         `;
     }
-    else if (id === 'digital') {
+else if (id === 'digital') {
         try {
             audioAmbienteEspacio = new Audio('sonido/encendido-digital.mp3');
             audioAmbienteEspacio.volume = 0.4;
@@ -254,6 +259,7 @@ function entrarAEspacio(id) {
             console.error("Error cargando sonido digital:", e);
         }
 
+        // ... dentro de else if (id === 'digital')
         pEspacio.innerHTML = `
             <button class="btn-volver-hub-desde-espacio" id="btn-cerrar-espacio">← SYSTEM.EXIT()</button>
             <canvas id="canvas-digital"></canvas>
@@ -265,18 +271,21 @@ function entrarAEspacio(id) {
             </div>
 
             <div class="replica-digital-contenedor">
+                
                 <div class="columna-info-digital">
                     <div class="bloque-digitalizacion-formatos">
-                        <div class="formato-viejo">
-                            <img src="imagen/silueta-vinilo.png" alt="Vinilo" class="img-formato-silueta">
-                            <span>VINILO</span>
-                        </div>
-                        <div class="flecha-flujo">➔</div>
                         <div class="formato-viejo">
                             <img src="imagen/silueta-cinta.png" alt="Cinta" class="img-formato-silueta">
                             <span>CINTA</span>
                         </div>
                         <div class="flecha-flujo">➔</div>
+                        
+                        <div class="formato-viejo">
+                            <img src="imagen/silueta-vinilo.png" alt="Vinilo" class="img-formato-silueta">
+                            <span>VINILO</span>
+                        </div>
+                        <div class="flecha-flujo">➔</div>
+                        
                         <div class="formato-viejo">
                             <img src="imagen/silueta-cassette.png" alt="Cassette" class="img-formato-silueta">
                             <span>CASSETTE</span>
@@ -291,6 +300,10 @@ function entrarAEspacio(id) {
                     <h2 class="titulo-seccion-digital">CD / DIGITAL</h2>
                     <h3 class="sub-seccion-digital">MÚSICA SIN LÍMITES</h3>
                     <p class="texto-futurista">Del disco físico al streaming. La era digital llevó toda la música a cualquier lugar del mundo al instante.</p>
+                    
+                    <div class="lista-esquina-spotify">
+                        <img src="imagen/lista-spotify.jpeg" alt="Lista Spotify">
+                    </div>
                 </div>
 
                 <div class="columna-mockup-digital">

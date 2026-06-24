@@ -1,7 +1,8 @@
 /* ==========================================================================
    🎨 ESTILOS GENERALES Y CONFIGURACIÓN (index.css)
    ========================================================================== */
-:root {
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700&display=swap');
+   :root {
     --fondo-negro: #020102;
     --crema-texto: #ffffff;
     --gris-subtitulo: rgba(255, 255, 255, 0.7);
@@ -1232,13 +1233,124 @@ body {
 }
 
 /* Contenedor de digitalización */
+/* --- Columna Izquierda: Contenidos y Flujo --- */
+.columna-info-digital {
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+}
+/* Contenedor de digitalización */
 .bloque-digitalizacion-formatos {
     display: flex;
     align-items: center;
     gap: 1rem;
     padding: 0.5rem 0;
-    margin-bottom: 2rem;
     max-width: 480px;
+
+    /* 🛡️ TRAER AL FRENTE */
+    position: relative !important;
+    z-index: 10 !important;
+
+    /* 🧼 RESETEO DE MÁRGENES */
+    margin-left: 0 !important;
+    margin-top: 0 !important;
+    margin-bottom: 2.5rem !important;
+
+    /* 🚀 EXTREMADAMENTE A LA DERECHA:
+       - Subí el primer valor a 650px para empujarlo muchísimo más hacia el extremo derecho.
+       - Mantiene el segundo valor (-60px) para que no pierda la altura que querías. */
+    transform: translate(650px, -60px) !important;
+}
+.formato-viejo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+/* CORRECCIÓN: Alto contraste con brillo blanco directo */
+.img-formato-silueta {
+    width: 38px;
+    height: 38px;
+    object-fit: contain;
+    /* Fuerza a que la silueta sea blanca brillante con un leve resplandor */
+    filter: brightness(0) invert(1) drop-shadow(0 0 8px rgba(255, 255, 255, 0.5)); 
+    opacity: 1; 
+    transition: all 0.3s ease;
+}
+
+.formato-viejo:hover .img-formato-silueta {
+    /* Destello azul eléctrico al pasar el cursor */
+    filter: brightness(0) invert(1) sepia(1) saturate(5) hue-rotate(190deg) drop-shadow(0 0 12px #0066ff);
+}
+
+.formato-viejo span {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 1px;
+    color: rgba(255, 255, 255, 0.8); /* Texto más claro para mejor lectura */
+}
+
+.flecha-flujo {
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 0.8rem;
+}
+
+.flecha-flujo.destino {
+    color: #00ff66;
+    animation: pulseFlecha 1s infinite alternate;
+}
+
+.badge-digital {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.7rem;
+    font-weight: bold;
+    color: #020104;
+    background: #00ff66 !important; /* ← Cambiado de amarillo a verde */
+    padding: 0.4rem 0.7rem;
+    border-radius: 4px;
+    letter-spacing: 1px;
+    box-shadow: 0 0 12px rgba(0, 255, 102, 0.5) !important; /* ← Sombra en verde */
+}
+
+@keyframes pulseFlecha {
+    0% { transform: translateX(0); opacity: 0.4; }
+    100% { transform: translateX(4px); opacity: 1; }
+}
+
+/* Textos informativos */
+.columna-info-digital .codigo-bites {
+    font-family: monospace;
+    color: #0066ff;
+    letter-spacing: 2px;
+    font-size: 0.85rem;
+    margin-bottom: 0.2rem;
+}
+
+.titulo-seccion-digital {
+    font-family: 'Space Grotesk', sans-serif !important;
+    font-weight: 700;
+    font-size: 3.2rem !important;
+    letter-spacing: 6px;
+    margin: 0.2rem 0;
+    color: #fff;
+}
+
+.sub-seccion-digital {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.4rem;
+    color: #a3b8cc;
+    letter-spacing: 3px;
+    margin-bottom: 1.5rem;
+}
+
+.columna-info-digital .texto-futurista {
+    text-align: left;
+    max-width: 450px;
+    font-size: 1.05rem;
+    color: rgba(255, 255, 255, 0.8);
+    margin: 0;
+    line-height: 1.6;
 }
 
 .formato-viejo {
@@ -1639,19 +1751,27 @@ body {
     text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 }
 
-/* 5. Bloque de "digitalización" AGRANDADO y pegado sobre la barra de reproducción */
+/* ==========================================================================
+   🎮 5. BLOQUE DE "DIGITALIZACIÓN" UNIFICADO Y DESPLAZADO A LA DERECHA
+   ========================================================================== */
 .bloque-digitalizacion-formatos {
-    position: fixed !important;   /* Cambiado a fixed para que dependa de la pantalla */
-    bottom: -350px !important;      /* Se apoya exactamente arriba de los 80px del reproductor */
-    left: 50% !important;
-    transform: translateX(-50%) !important; /* Centrado horizontal perfecto */
+    position: fixed !important;   /* Control directo sobre la pantalla global */
+    bottom: -350px !important;    /* Mantiene el apoyo por encima del reproductor */
+    
+    /* 🚀 CONTROL ABSOLUTO DE LA DERECHA:
+       - Eliminamos el translateX(-50%) que lo volvía a tirar para el centro.
+       - Ahora, cambiando este porcentaje se va a mover perfectamente.
+       - Probá con 65%, 70% o 75% hasta encontrar tu punto ideal en pantalla. */
+    left: 70% !important;
+    transform: none !important;   /* 🧼 Forzamos a quitar el freno que lo congelaba */
+    
     width: max-content !important; 
     display: flex !important;
     justify-content: center !important;
     align-items: center !important;
     gap: 20px !important; 
-    z-index: 99 !important;        /* Por encima del canvas pero abajo de la barra */
-    margin-bottom: 0 !important;   /* Reseteamos márgenes residuales */
+    z-index: 99 !important;        
+    margin: 0 !important;   
 }
 
 /* Escalado de fuentes e imágenes dentro de digitalización */
@@ -1694,4 +1814,229 @@ body {
     align-items: center;
     padding: 0 40px;
     z-index: 10 !important;
+}
+/* ==========================================================================
+   📺 EFECTO DE ESTÁTICA ANALÓGICA (VERSIÓN LEVE Y SUTIL)
+   ========================================================================== */
+
+/* Asegura que el contenedor de Cassette oculte el desborde de la estática */
+.espacio-cassette {
+    position: relative !important;
+    overflow: hidden !important;
+}
+
+/* Capa superpuesta que genera el ruido visual de puntos en movimiento */
+.espacio-cassette::before {
+    content: "";
+    position: absolute;
+    /* Margen mínimo para cubrir los saltos pequeños */
+    top: -5%;
+    left: -5%;
+    right: -5%;
+    bottom: -5%;
+    width: 110%;
+    height: 110%;
+    background: 
+        radial-gradient(rgba(255, 204, 0, 0.12) 1.2px, transparent 0),  /* Puntos amarillos tenues */
+        radial-gradient(rgba(255, 0, 100, 0.08) 1.2px, transparent 0); /* Puntos rosa muy tenues */
+    background-size: 8px 8px, 6px 6px; /* Grano fino */
+    opacity: 0.25; /* 👈 Muy baja opacidad para que sea súper sutil */
+    pointer-events: none;
+    z-index: 1; /* Por encima de la imagen de fondo, por detrás del contenido */
+    animation: estaticaLeve 0.16s infinite steps(4); 
+}
+
+/* Asegura que el contenido (textos, walkman, etc.) quede intacto por encima de la estática */
+.cultura-cassette-contenedor {
+    position: relative !important;
+    z-index: 5 !important;
+}
+
+/* Saltos mínimos milimétricos para un parpadeo suave */
+@keyframes estaticaLeve {
+    0% { transform: translate(0, 0); }
+    25% { transform: translate(-0.8%, 1.2%); }  /* 👈 Movimientos de apenas un 1% */
+    50% { transform: translate(1.2%, -0.6%); }
+    75% { transform: translate(-0.6%, -1%); }
+    100% { transform: translate(0.8%, 0.6%); }
+}
+/* ==========================================================================
+   🌐 TIPOGRAFÍAS Y DISEÑO DE SECCIÓN DIGITAL
+   ========================================================================== */
+.espacio-digital .replica-digital-contenedor,
+.espacio-digital .replica-digital-contenedor h2,
+.espacio-digital .replica-digital-contenedor h3,
+.espacio-digital .replica-digital-contenedor span,
+.espacio-digital .formato-viejo span {
+    font-family: 'Orbitron', sans-serif !important;
+}
+
+.espacio-digital .replica-digital-contenedor h3 {
+    font-family: 'Orbitron', sans-serif !important;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--crema-texto);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 0.7rem;
+}
+
+.espacio-digital .replica-digital-contenedor p.texto-futurista {
+    font-family: 'Orbitron', sans-serif !important;
+    font-size: 0.78rem;
+    letter-spacing: 1px;
+    color: #bfae9c;
+    line-height: 1.6;
+}
+
+/* Imagen Esquina Inferior Izquierda - Digital */
+.lista-esquina-spotify {
+    position: absolute;
+    bottom: 90px; /* Queda justo por encima de la barra inferior del reproductor */
+    left: 30px;
+    z-index: 40;
+    width: 140px; /* Tamaño ajustable según prefieras */
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    pointer-events: none;
+}
+
+.lista-esquina-spotify img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: contain;
+}
+
+
+/* ==========================================================================
+   📻 TIPOGRAFÍAS Y DISEÑO DE SECCIÓN CASSETTE
+   ========================================================================== */
+.espacio-cassette .cultura-cassette-contenedor,
+.espacio-cassette .bloque-titulo-cassette-fanzine h2,
+.espacio-cassette .subtitulo-fanzine,
+.espacio-cassette .bloque-parrafo-fanzine p,
+.espacio-cassette .lista-caracteristicas-cassette li {
+    font-family: 'Permanent Marker', cursive, sans-serif !important;
+}
+
+/* Imagen Esquina Inferior Izquierda - Cassette */
+.lista-esquina-cassette {
+    position: absolute;
+    bottom: 25px;
+    left: 25px;
+    z-index: 40;
+    width: 150px; /* Tamaño ajustable para el fanzine */
+    height: auto;
+    pointer-events: none;
+    transform: rotate(-3deg); /* Le da un toque manual estilo fanzine */
+}
+
+.lista-esquina-cassette img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: contain;
+    filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.6));
+}
+/* ==========================================================================
+   🎵 AJUSTES FINALES: TIPOGRAFÍAS Y COORDENADAS COMPARTIDAS
+   ========================================================================== */
+
+/* IMPORTACIÓN DE ORBITRON (Por las dudas si no estaba en el HTML) */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700&display=swap');
+
+/* --- 🌐 SECCIÓN DIGITAL: Tipografía Orbitron --- */
+.espacio-digital .replica-digital-contenedor,
+.espacio-digital .replica-digital-contenedor h2,
+.espacio-digital .replica-digital-contenedor h3,
+.espacio-digital .replica-digital-contenedor span,
+.espacio-digital .formato-viejo span {
+    font-family: 'Orbitron', sans-serif !important;
+}
+
+.espacio-digital .replica-digital-contenedor h3 {
+    font-family: 'Orbitron', sans-serif !important;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--crema-texto);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 0.7rem;
+}
+
+.espacio-digital .replica-digital-contenedor p.texto-futurista {
+    font-family: 'Orbitron', sans-serif !important;
+    font-size: 0.78rem;
+    letter-spacing: 1px;
+    color: #bfae9c;
+    line-height: 1.6;
+}
+
+/* --- 📻 SECCIÓN CASSETTE: Tipografía Permanent Marker --- */
+.espacio-cassette .cultura-cassette-contenedor,
+.espacio-cassette .bloque-titulo-cassette-fanzine h2,
+.espacio-cassette .subtitulo-fanzine,
+.espacio-cassette .bloque-parrafo-fanzine p,
+.espacio-cassette .lista-caracteristicas-cassette li {
+    font-family: 'Permanent Marker', cursive, sans-serif !important;
+}
+
+
+/* ==========================================================================
+   📌 REPOSICIONAMIENTO FORZADO DE IMÁGENES (CON TRANSLATE Y EN LÍNEA)
+   ========================================================================== */
+
+/* --- CASSETTE: Correr un poco más a la derecha --- */
+.lista-esquina-cassette {
+    display: block !important;
+    width: 260px !important;
+    height: auto !important;
+    margin-top: 45px !important;
+    margin-bottom: 20px !important;
+    pointer-events: none !important;
+    
+    /* 🛠️ MODIFICA ACÁ: El primer valor (40px) la mueve a la derecha. 
+       Si querés más a la derecha, subilo a 60px o 80px. El segundo (-2deg) es la rotación fanzine. */
+    transform: translateX(120px) rotate(-2deg) !important; 
+}
+
+.lista-esquina-cassette img {
+    width: 100% !important;
+    height: auto !important;
+    display: block !important;
+    object-fit: contain !important;
+    filter: drop-shadow(4px 6px 8px rgba(0,0,0,0.6)) !important;
+}
+
+/* --- DIGITAL: Unificado, grande, bien a la izquierda y abajo (Valores seguros) --- */
+.lista-esquina-spotify {
+    display: block !important;
+    
+    /* 1) Tamaño de la imagen (Agrandada) */
+    width: 420px !important; 
+    height: auto !important; 
+    
+    /* Estilos estéticos */
+    margin-top: 45px !important;
+    margin-bottom: 20px !important;
+    border-radius: 8px !important;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6) !important;
+    pointer-events: none !important;
+    
+    /* 2) Posición (Eje X, Eje Y)
+       - Bajamos a -50px (un poco a la izquierda) y 150px (un poco más abajo) para que aparezca sí o sí. */
+    transform: translate(-300px, 450px) !important;
+}
+#canvas-digital {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    
+    /* 🧊 ENVIAR ATRÁS: Se queda como fondo y no interfiere con los textos ni imágenes */
+    z-index: 1 !important; 
+    pointer-events: none !important; 
 }
