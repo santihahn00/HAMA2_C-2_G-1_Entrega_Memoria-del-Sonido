@@ -2,16 +2,21 @@
    🎨 ESTILOS GENERALES Y CONFIGURACIÓN (index.css)
    ========================================================================== */
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700&display=swap');
-   :root {
-    --fondo-negro: #020102;
-    --crema-texto: #ffffff;
-    --gris-subtitulo: rgba(255, 255, 255, 0.7);
+@import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Special+Elite&display=swap');
+:root {
+    /* Paleta de catálogo de museo moderno */
+    --fondo-archivo-claro: #f5f1ea;   /* Color hueso mate refinado de la imagen */
+    --texto-negro-editorial: #161514; /* Negro carbón de imprenta */
+    --gris-archivo: #706e69;          /* Gris de anotación técnica */
+    --dorado-siena: #b8975f;          /* Tono siena/oro viejo apagado */
     
-    /* Colores conceptuales */
+    /* Mantenemos tus colores conceptuales para el interior de los formatos */
     --color-cassette: #3a0808; 
     --color-digital: #001144;  
     --color-cinta: #5a2205;    
-    --color-vinilo: #052507;   
+    --color-vinilo: #052507;  
+     --crema-texto: #f7f4ef; 
 }
 
 * {
@@ -21,14 +26,24 @@
 }
 
 body {
-    background-color: var(--fondo-negro);
-    color: var(--crema-texto);
-    font-family: 'Libre Baskerville', serif;
+    background-color: var(--fondo-archivo-claro);
+    color: var(--texto-negro-editorial);
+    font-family: 'Playfair Display', serif;
     overflow: hidden;
     height: 100vh;
     width: 100vw;
 }
 
+/* Forzamos a que las secciones del Inicio, Hub y Cierre compartan esta atmósfera clara */
+#pantalla-titulo, 
+#pantalla-explicacion, 
+#pantalla-hub, 
+#pantalla-final {
+    background-color: var(--fondo-archivo-claro) !important;
+    color: var(--texto-negro-editorial) !important;
+}
+
+/* CONFIGURACIÓN BASE DE PANTALLAS (Mantenida de tu archivo original) */
 .pantalla {
     position: fixed;
     top: 0;
@@ -39,59 +54,80 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: var(--fondo-negro);
     opacity: 0;
     pointer-events: none;
-    transition: opacity 1s ease-in-out, background-color 1s ease;
-    z-index: 10;
+    transition: opacity 1s ease-in-out;
+    z-index: 1;
+    padding: 40px;
 }
 
 .pantalla.activa {
     opacity: 1;
     pointer-events: auto;
-    z-index: 20;
+    z-index: 2;
 }
 
-.oculto {
-    display: none !important;
-}
-
-/* ==========================================================================
-   1) PANTALLA INICIAL (TÍTULO)
-   ========================================================================== */
-#pantalla-titulo h1 {
-    font-size: 3.5rem;
-    text-transform: uppercase;
-    letter-spacing: 4px;
+/* ─── PANTALLA DE TÍTULO ─── */
+.contenedor-titulo-editorial {
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.subtitulo-bienvenida {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 7px;
+    color: var(--dorado-siena);
+    margin-bottom: 25px;
+}
+
+#btn-comenzar {
+    font-family: 'Playfair Display', serif !important;
+    font-size: 5.8rem !important;
+    font-weight: 400 !important;
+    font-style: italic !important;
+    color: var(--texto-negro-editorial) !important;
     cursor: pointer;
-    text-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
-    padding: 2rem;
-    opacity: 0;
-    transition: opacity 1s ease-in-out;
+    line-height: 1;
+    opacity: 0; /* Lo maneja tu JS con el timeout */
+    transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), color 0.3s ease, opacity 1s ease !important;
+}
+
+#btn-comenzar:hover {
+    color: var(--dorado-siena) !important;
+    transform: scale(1.015);
+}
+
+.indicador-entrada {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px;
+    letter-spacing: 4px;
+    color: var(--gris-archivo);
+    margin-top: 40px;
+    opacity: 0.6;
 }
 
 /* ==========================================================================
    2) PANTALLA EXPLICACIÓN + IMÁGENES DE FONDO SUTILES
    ========================================================================== */
-#pantalla-explicacion {
+.contenedor-texto-explicativo {
+    max-width: 780px !important;
+    text-align: center;
+    z-index: 5;
+    position: relative;
     cursor: pointer;
 }
 
-.contenedor-texto-explicativo {
-    max-width: 40rem;
-    text-align: center;
-    padding: 2.5rem;
-    z-index: 30;
-    background-color: rgba(2, 1, 2, 0.85);
-    backdrop-filter: blur(8px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
 .contenedor-texto-explicativo p {
-    font-size: 1.2rem;
-    line-height: 1.8;
-    color: var(--gris-subtitulo);
+    font-family: 'Playfair Display', serif !important;
+    font-size: 1.8rem !important;
+    font-style: italic !important;
+    line-height: 1.75 !important;
+    color: var(--texto-negro-editorial) !important;
+    font-weight: 400;
 }
 
 #mosaico-flotante {
@@ -101,110 +137,147 @@ body {
     width: 100%;
     height: 100%;
     pointer-events: none;
-    z-index: 11;
+    z-index: 2;
     overflow: hidden;
 }
 
+/* Estilos para las imágenes que crea tu index.js dinámicamente */
 .img-flotante {
     position: absolute;
-    width: 90px;  
-    height: 90px; 
-    object-fit: cover;
-    opacity: 0.08; /* Muy sutil para no interferir con la lectura */
-    filter: grayscale(1) contrast(1.2);
-    pointer-events: none;
+    width: 160px; /* Un poco más grandes para que luzcan en el fondo */
+    height: auto;
+    opacity: 0.15; 
+    filter: grayscale(100%) contrast(90%);
 }
 
-/* ==========================================================================
-   3) HUB DE LOS FORMATOS (SIN TÍTULO Y CENTRALIZADO)
-   ========================================================================== */
+@keyframes moverHaciaArriba {
+    0% {
+        transform: translateY(110vh) rotate(0deg);
+    }
+    100% {
+        transform: translateY(-20vh) rotate(10deg);
+    }
+}
+
+/* ─── PANTALLA HUB (Catálogo Minimalista) ─── */
 .contenedor-hub-estructurado {
+    width: 100%;
+    max-width: 1100px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center; /* Centrado vertical absoluto en su sección */
-    gap: 3.5rem;
-    width: 90%;
-    max-width: 1000px;
-    height: 100%; /* Toma todo el alto para garantizar el centrado */
+}
+
+.cabecera-hub-archivo {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.cabecera-hub-archivo h2 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+    letter-spacing: 5px;
+    color: var(--texto-negro-editorial);
+    margin-bottom: 12px;
+}
+
+.cabecera-hub-archivo p {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 15px;
+    color: var(--gris-archivo);
 }
 
 .grilla-formatos-inicial {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 2rem;
+    gap: 30px;
     width: 100%;
+    margin-bottom: 40px;
 }
 
+/* Tarjetas de formato adaptadas a la estética clara */
 .tarjeta-formato {
-    background-color: #0a0a0a;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 1.5rem;
-    text-align: center;
+    background: #ffffff !important; /* Tarjeta blanca pura que resalta en el fondo hueso */
+    border: 1px solid rgba(0, 0, 0, 0.05) !important;
+    border-radius: 4px !important;
+    padding: 30px 20px !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     cursor: pointer;
-    transition: transform 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02) !important;
+    transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1) !important;
 }
 
 .tarjeta-formato:hover {
-    transform: translateY(-5px);
-    border-color: rgba(255, 255, 255, 0.4);
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+    transform: translateY(-8px) !important;
+    box-shadow: 0 20px 40px rgba(22, 21, 20, 0.06) !important;
+    border-color: var(--dorado-siena) !important;
 }
 
 .tarjeta-formato .caja-img {
     width: 100%;
-    height: 140px;
-    background-color: #000;
-    margin-bottom: 1rem;
-    overflow: hidden;
+    height: 160px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
 }
 
 .tarjeta-formato .caja-img img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    filter: grayscale(15%) contrast(95%);
+    transition: transform 0.4s ease;
 }
 
-.tarjeta-formato h3 {
-    font-size: 1.1rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-/* Caja del signo de pregunta */
-.tarjeta-misterio {
-    width: 75px;
-    height: 75px;
-    border: 1px dashed rgba(255, 255, 255, 0.6);
-    background-color: #0c0c0c;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
-}
-
-/* Estado bloqueado: oscuro, sin interacciones físicas */
-.tarjeta-misterio.bloqueado {
-    opacity: 0.25;
-    filter: grayscale(1);
-    cursor: not-allowed;
-    pointer-events: none; /* No recibe clicks ni hovers */
-    border-color: rgba(255, 255, 255, 0.2);
-}
-
-.tarjeta-misterio:not(.bloqueado):hover {
-    border-style: solid;
-    border-color: #ffffff;
-    box-shadow: 0 0 25px rgba(255, 255, 255, 0.3);
+.tarjeta-formato:hover .caja-img img {
     transform: scale(1.05);
 }
 
-.tarjeta-misterio .signo {
-    font-size: 2rem;
-    font-weight: bold;
-    line-height: 1;
+.tarjeta-formato h3 {
+    font-family: 'Playfair Display', serif !important;
+    font-size: 1.35rem !important;
+    font-style: italic !important;
+    font-weight: 400 !important;
+    color: var(--texto-negro-editorial) !important;
+}
+
+/* Tarjeta misterio de la incógnita */
+.tarjeta-misterio {
+    width: 80px;
+    height: 80px;
+    background: rgba(0, 0, 0, 0.01) !important;
+    border: 1px dashed var(--gris-archivo) !important;
+    border-radius: 50% !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: not-allowed;
+    transition: all 0.4s ease;
+}
+
+.tarjeta-misterio.bloqueado .signo {
+    font-family: 'Space Grotesk', sans-serif;
+    color: var(--gris-archivo);
+    opacity: 0.5;
+    font-size: 1.5rem;
+}
+
+.tarjeta-misterio:not(.bloqueado) {
+    cursor: pointer !important;
+    background: #ffffff !important;
+    border: 1px solid var(--dorado-siena) !important;
+    box-shadow: 0 0 20px rgba(184, 151, 95, 0.2);
+    animation: pulsoSutil 2s infinite alternate;
+}
+
+@keyframes pulsoSutil {
+    from { transform: scale(1); }
+    to { transform: scale(1.06); }
 }
 
 /* ==========================================================================
@@ -214,22 +287,6 @@ body {
 .espacio-digital { background-color: var(--color-digital) !important; }
 .espacio-cinta { background-color: var(--color-cinta) !important; }
 .espacio-vinilo { background-color: var(--color-vinilo) !important; }
-
-.contenido-espacio {
-    text-align: center;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 6rem 2rem 4rem 2rem;
-}
-
-.contenido-espacio h2 {
-    font-size: 3.5rem;
-    text-transform: uppercase;
-    letter-spacing: 4px;
-}
 
 .btn-volver-hub-desde-espacio {
     position: absolute;
@@ -296,134 +353,131 @@ body {
 /* ==========================================================================
    5) PANTALLA FINAL: COMPARACIONES ANÓNIMAS Y AIRE CON EL VIDEO
    ========================================================================== */
-#pantalla-final {
-    position: relative;
-    height: 100vh;
-    display: block; 
-    overflow-y: auto;
-    padding: 0;
-}
-
-.btn-volver-esquina {
-    position: fixed;
-    top: 25px;
-    left: 25px;
-    background-color: rgba(0, 0, 0, 0.7);
-    color: var(--crema-texto);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    padding: 0.6rem 1.2rem;
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    cursor: pointer;
-    z-index: 100;
-    transition: all 0.3s ease;
-}
-
-.btn-volver-esquina:hover {
-    background-color: var(--crema-texto);
-    color: var(--fondo-negro);
-    border-color: var(--crema-texto);
-}
-
 .seccion-comparativa {
-    width: 100%;
-    text-align: center;
-    padding-top: 5.5rem;
+    width: 100% !important;
+    max-width: 1400px !important; /* Mayor ancho permitido en pantallas grandes */
+    margin: 0 auto;
+    padding: 40px 20px;
 }
 
-.seccion-comparativa h2 {
-    font-size: 2rem;
-    margin-bottom: 2.5rem;
-    letter-spacing: 1px;
-    text-transform: uppercase;
+.titulo-editorial-final {
+    font-family: 'Playfair Display', serif !important;
+    font-size: 2.6rem !important;
+    font-style: italic !important;
+    font-weight: 400 !important;
+    text-align: center;
+    color: var(--texto-negro-editorial) !important;
+    margin-bottom: 40px;
 }
 
 .grilla-videos-interactivos {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(2, 450px);
-    gap: 0;
-    width: 100vw;
-    position: relative;
-    left: 50%;
-    right: 50%;
-    margin-left: -50vw;
-    margin-right: -50vw;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 30px !important; /* Más separación elegante */
+    width: 100% !important;
+    max-width: 100% !important;
 }
 
 .cuadrante-interactivo {
-    position: relative;
-    background-color: #0b0b0d;
-    overflow: hidden;
-    cursor: pointer;
-    border: 1px solid rgba(255, 255, 255, 0.02); /* División ultra fina imperceptible */
+    aspect-ratio: 1 / 1 !important;
+    width: 100% !important;
+    min-width: 220px !important; /* Asegura que no se colapsen en pantallas chicas */
+    background-color: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+    border-radius: 6px !important;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.04) !important;
 }
 
-/* El video permanece oculto hasta que el cursor se posa sobre él */
+.cuadrante-interactivo:hover {
+    transform: scale(1.03);
+    border-color: var(--dorado-siena);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.06);
+}
+
 .cuadrante-interactivo video {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    opacity: 0;
-    transition: opacity 0.6s cubic-bezier(0.25, 1, 0.5, 1);
-    pointer-events: none;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
 }
 
-.cuadrante-interactivo:hover video {
-    opacity: 1;
-}
-
-/* --- SECCIÓN DOCUMENTAL FINAL CORREGIDA CON MÁS ESPACIO --- */
-.seccion-documental {
-    max-width: 800px;
-    margin: 18rem auto 10rem auto; /* Se subió de 12rem a 18rem para dar más aire dramático */
-    padding: 0 2rem;
+.etiqueta-video-formato {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    color: var(--gris-archivo);
+    margin-top: 15px;
     text-align: center;
 }
 
-.bloque-introductorio-video {
-    margin-bottom: 3.5rem;
+/* Botones de navegación de esquina superiores */
+.btn-volver-esquina {
+    position: absolute;
+    top: 40px;
+    left: 40px;
+    background: none !important;
+    border: 1px solid var(--texto-negro-editorial) !important;
+    color: var(--texto-negro-editorial) !important;
+    font-family: 'Space Grotesk', sans-serif !important;
+    font-size: 10px !important;
+    letter-spacing: 2px !important;
+    text-transform: uppercase;
+    padding: 10px 22px !important;
+    border-radius: 2px !important;
+    cursor: pointer;
+    transition: all 0.3s ease !important;
+    z-index: 10;
+}
+
+.btn-volver-esquina:hover {
+    background-color: var(--texto-negro-editorial) !important;
+    color: var(--fondo-archivo-claro) !important;
+}
+
+/* Bloque Documental Inferior */
+.seccion-documental {
+    width: 100%;
+    max-width: 1200px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+    align-items: center;
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+    
+    /* Aumentamos drásticamente los márgenes y rellenos para dar aire */
+    padding-top: 60px !important; 
+    margin-top: 70px !important; 
 }
 
 .bloque-introductorio-video h3 {
-    font-size: 1.5rem;
-    text-transform: uppercase;
+    font-family: 'Space Grotesk', sans-serif !important;
+    font-size: 1.1rem !important;
+    font-weight: 600 !important;
     letter-spacing: 2px;
-    margin-bottom: 1rem;
+    text-transform: uppercase;
+    color: var(--texto-negro-editorial) !important;
+    margin-bottom: 15px;
 }
 
 .bloque-introductorio-video p {
-    font-size: 1.05rem;
-    line-height: 1.8;
-    color: var(--gris-subtitulo);
+    font-family: 'Playfair Display', serif !important;
+    font-style: italic !important;
+    font-size: 1.05rem !important;
+    color: var(--gris-archivo) !important;
+    line-height: 1.65 !important;
 }
 
 .contenedor-video-fijo {
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    background-color: #000;
-    padding: 12px;
-    box-shadow: 0 0 40px rgba(0, 0, 0, 0.8);
+    width: 100%;
+    background: #ffffff;
+    padding: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.02);
 }
 
 .contenedor-video-fijo video {
     width: 100%;
     display: block;
-}
-
-@media(max-width: 768px) {
-    .grilla-videos-interactivos {
-        grid-template-columns: 1fr;
-        grid-template-rows: repeat(4, 300px);
-    }
-    .grilla-formatos-inicial { grid-template-columns: repeat(2, 1fr); }
-    #pantalla-titulo h1 { font-size: 2.2rem; }
-    .seccion-documental { margin-top: 10rem; }
 }
 /* ==========================================================================
    ⚙️ DISEÑO CONCEPTUAL: LA ERA INDUSTRIAL (CINTA)
@@ -524,135 +578,288 @@ body {
     font-family: 'Special Elite', monospace;
 }
 /* ==========================================================================
-   🍷 DISEÑO CONCEPTUAL: RITUAL DE LA ELEGANCIA (VINILO)
+   🏛️ AMBIENTACIÓN REFINADA: PORTADA DE TEXTO Y DISCO SUBYACENTE
    ========================================================================== */
 
-/* Fondo crema/marfil con textos en un burdeos profundo o negro azabache */
-.espacio-vinilo {
-    background-color: #f4f0ea !important; /* Color crema/marfil de fondo */
-    color: #1a1a1a !important; /* Negro pulido suave para el texto */
-}
-
-/* Contenedor minimalista con mucho espacio en blanco */
-.ritual-vinilo-contenedor {
-    width: 80%;
-    max-width: 1000px;
-    height: 85vh;
+.ritual-vinilo-contenedor, #pantalla-vinilo {
+    width: 100vw !important;
+    height: 100vh !important;
+    padding: 50px 80px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 3rem 0;
-    /* Animación de entrada lenta */
-    animation: fadeInSuave 1.8s ease forwards;
+    box-sizing: border-box;
+    position: relative;
+    z-index: 5;
+    background: radial-gradient(circle at center, #14110f 0%, #070605 100%) !important;
+    background-size: cover !important;
+    background-position: center !important;
+    overflow: hidden;
 }
 
-.bloque-titulo-vinilo {
-    text-align: center;
-    margin-bottom: 2rem;
+.textura-clasica-filtro {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(rgba(212, 175, 55, 0.01) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(212, 175, 55, 0.01) 1px, transparent 1px);
+    background-size: 30px 30px;
+    pointer-events: none;
+    z-index: 1;
 }
 
-.subtitulo-elegante {
-    font-family: 'Playfair Display', serif;
-    font-style: italic;
-    font-size: 1.1rem;
-    color: #801818; /* Color Burdeos/Vino para detalles */
-    letter-spacing: 1px;
-}
-
-.bloque-titulo-vinilo h2 {
-    font-family: 'Playfair Display', serif !important;
-    font-weight: 400;
-    font-size: 3.5rem !important;
-    text-transform: uppercase;
-    letter-spacing: 6px;
-    margin-top: 0.5rem;
-    color: #1a1a1a;
-}
-
-/* Disposición asimétrica y limpia */
-.cuerpo-vinilo {
-    display: grid;
-    grid-template-columns: 1.2fr 1.8fr;
-    gap: 5rem;
-    align-items: center;
-    margin: auto 0;
-}
-
-.columna-texto-vinilo {
-    text-align: left;
-}
-
-.texto-alta-costura {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.2rem;
-    line-height: 1.9;
-    color: #333333;
-}
-
-/* Galería con bordes delgados dorados */
-.columna-galeria-vinilo {
+/* Barra superior y Mini Navegación sin imágenes (Solo Texto) */
+.barra-navegacion-superior-vinilo {
     display: flex;
-    justify-content: flex-end;
-    gap: 2rem;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    z-index: 10;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+    padding-bottom: 20px;
 }
 
-.marco-dorado-delgado {
-    border: 1px solid #c5a059; /* Oro viejo sutil */
-    padding: 8px;
-    background-color: #ffffff;
-    width: 240px;
-    height: 310px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05); /* Sombra muy suave */
-    transition: transform 0.6s ease;
+.mini-navegacion-nombres-vinilo {
+    display: flex;
+    gap: 30px;
 }
 
-.marco-dorado-delgado:hover {
-    transform: translateY(-5px);
+/* Modificadores para que las mini-tarjetas inyectadas dinámicamente pierdan la imagen */
+.mini-navegacion-nombres-vinilo .mini-tarjeta {
+    background: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
 }
 
-.marco-dorado-delgado img {
+.mini-navegacion-nombres-vinilo .mini-tarjeta .mini-caja-img {
+    display: none !important; /* Eliminamos por completo el espacio de la imagen */
+}
+
+.mini-navegacion-nombres-vinilo .mini-tarjeta h4 {
+    font-family: 'Space Grotesk', sans-serif !important;
+    font-size: 13px !important;
+    letter-spacing: 3px !important;
+    color: rgba(247, 244, 239, 0.5) !important;
+    font-weight: 600 !important;
+    transition: color 0.3s ease, transform 0.3s ease !important;
+    margin: 0 !important;
+}
+
+.mini-navegacion-nombres-vinilo .mini-tarjeta:hover h4 {
+    color: #d4af37 !important;
+    transform: translateY(-2px);
+}
+
+/* Grilla de Distribución Asimétrica (Izquierda texto, Derecha obra gigante) */
+.grilla-fanzine-vinilo {
+    display: grid;
+    grid-template-columns: 1fr 1.3fr;
+    gap: 80px;
+    align-items: center;
+    flex-grow: 1;
+    width: 100%;
+    z-index: 6;
+}
+
+.col-fanzine-vinilo-izq {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.bloque-titulo-vinilo-fanzine .subtitulo-fanzine-vinilo {
+    font-family: 'Playfair Display', serif !important;
+    font-size: 1.1rem !important;
+    font-style: italic !important;
+    font-weight: 600 !important;
+    letter-spacing: 2px !important;
+    color: #d4af37 !important; /* Mantiene el toque dorado de alta sociedad */
+    display: block !important;
+    margin-bottom: 0.5rem !important;
+}
+
+/* Título Principal ("VINILO") */
+.bloque-titulo-vinilo-fanzine h2 {
+    font-family: 'Playfair Display', serif !important;
+    font-size: 4.5rem !important; /* Proporción grande para el fanzine */
+    font-style: italic !important;
+    font-weight: 600 !important;
+    line-height: 1 !important;
+    margin-bottom: 1.5rem !important;
+    color: var(--crema-texto) !important;
+}
+
+/* El texto del párrafo conceptual de la izquierda */
+.bloque-parrafo-vinilo-fanzine p {
+    font-family: 'Playfair Display', serif !important;
+    font-style: italic !important;
+    font-size: 0.9rem !important;
+    color: #d4c4b3 !important; /* El tono crema suave que pediste */
+    line-height: 1.5 !important;
+    text-align: justify !important;
+}
+
+/* Bloque contenedor de la Portada y el Disco de fondo */
+.col-fanzine-vinilo-derecha-obra {
+    display: flex;
+    justify-content: flex-end; /* Lo empuja firmemente a la derecha */
+    align-items: center;
+}
+
+.contenedor-vinilo-capsula {
+    position: relative;
+    width: 500px;  /* Agrandado */
+    height: 500px; /* Agrandado */
+}
+
+/* El sobre/marco contenedor de la carátula */
+.marco-dorado-fino {
+    position: absolute;
+    left: 0;
+    top: 0;
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    padding: 3px;
+    background: linear-gradient(135deg, #d4af37 0%, #54410f 100%);
+    box-shadow: 0 30px 60px rgba(0,0,0,0.9);
+    border-radius: 3px;
+    z-index: 4; /* Por encima del disco */
 }
 
-/* Forzar que el botón de volver y las mini-tarjetas se adapten a la paleta del Vinilo */
-.espacio-vinilo .btn-volver-hub-desde-espacio {
-    background-color: #1a1a1a;
-    color: #f4f0ea;
-    border: 1px solid #c5a059;
+.img-vinilo-cover {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    display: block !important;
+    opacity: 0.45 !important; /* <--- Ahora se nota mucho más el arte del cover */
+    background-color: #0c0a09 !important;
 }
 
-.espacio-vinilo .btn-volver-hub-desde-espacio:hover {
-    background-color: #801818; /* Burdeos al hacer hover */
-    color: white;
+/* Capa de texto montada directo encima de la portada del álbum */
+.contenido-texto-portada {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    z-index: 5;
 }
 
-.espacio-vinilo .mini-tarjeta {
-    border: 1px solid rgba(197, 160, 89, 0.3) !important;
-    background-color: #ffffff;
-    color: #1a1a1a;
+.lista-caracteristicas-vinilo {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
 }
 
-.espacio-vinilo .mini-tarjeta:hover {
-    border-color: #c5a059 !important;
+.lista-caracteristicas-vinilo li {
+    font-family: 'Playfair Display', serif !important;
+    font-style: italic !important;
+    font-size: 1rem !important;
+    font-weight: 600 !important;
+    margin-bottom: 40px !important;
+    display: flex !important;
+    align-items: center !important;
+    color: var(--crema-texto) !important;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.8) !important;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.2) !important;
+    padding-bottom: 15px !important;
 }
 
-.espacio-vinilo .mini-tarjeta h4 {
-    font-family: 'Playfair Display', serif;
+.lista-caracteristicas-vinilo li:last-child {
+    margin-bottom: 0 !important;
 }
 
-/* Animación de Fade-in Lento */
-@keyframes fadeInSuave {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+/* Pequeño rombo decorativo de la lista */
+.marcador-vinilo-flecha {
+    color: #d4af37 !important;
+    margin-right: 20px !important;
+    font-style: normal !important; /* Evita que el rombo se incline */
+    font-size: 14px !important;
 }
+
+/* 🕹️ VINILO DE TRASFONDO (Se mantiene oculto y asoma en la interacción) */
+.img-vinilo-disco.bn-filtro {
+    position: absolute !important;
+    left: 20px !important; 
+    top: 20px !important;
+    width: 440px !important;
+    height: 440px !important;
+    z-index: 2 !important; /* Mantiene el disco por detrás de la carátula */
+    object-fit: contain !important;
+    filter: grayscale(100%) contrast(105%) opacity(0.9) !important;
+    
+    /* Suavizado de la animación */
+    transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1) !important;
+}
+
+/* Al pasar el mouse, el disco se desliza elegantemente hacia afuera por detrás de la portada */
+.contenedor-vinilo-capsula:hover .img-vinilo-disco.bn-filtro {
+    
+    /* 🛠️ MODIFICA ACÁ PARA HACERLO MANUAL:
+       El primer valor dentro de translateX() controla qué tan afuera sale el disco.
+       
+       - Si querés que salga MÁS hacia la izquierda (más expuesto): 
+         Aumentá el número negativo (ej: cambia -180px por -220px, -260px, etc).
+         
+       - Si querés que salga MENOS (que quede más escondido): 
+         Reducí el número negativo acercándolo a cero (ej: -140px, -100px). */
+         
+    transform: translateX(-180px) rotate(-180deg) !important;
+}
+/* ==========================================================================
+   🏛️ BOTÓN "LEVANTAR PÚA" ESTILO REFINADO (SIN VERDE NEÓN)
+   ========================================================================== */
+.barra-navegacion-superior-vinilo .btn-volver-hub-desde-espacio {
+    background: none !important;
+    border: 1px solid rgba(212, 175, 55, 0.4) !important; 
+    border-radius: 2px !important;
+    padding: 8px 16px !important;
+    color: #f7f4ef !important; 
+    font-family: 'Space Grotesk', sans-serif !important;
+    font-size: 11px !important;
+    font-weight: 600 !important;
+    letter-spacing: 3px !important;
+    cursor: pointer !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+    transition: all 0.3s ease !important;
+}
+/* ==========================================================================
+   🏛️ IMAGEN DECORATIVA INFERIOR IZQUIERDA ("extra-vinilo.png")
+   ========================================================================== */
+.img-extra-vinilo {
+    display: none !important; 
+    /* pointer-events: none;  <-- ELIMINA ESTA LÍNEA */
+    position: absolute !important;
+    bottom: 20px !important;
+    left: 20px !important;
+    width: 200px !important; /* Ajusta el tamaño real de tu icono de interacción */
+    height: auto !important;
+    z-index: 1000 !important;
+    cursor: pointer !important; /* Esto hace que el mouse cambie a manita */
+}
+.img-extra-vinilo {
+    display: none; 
+}
+
+.espacio-vinilo .img-extra-vinilo {
+    display: block;
+}
+.barra-navegacion-superior-vinilo .btn-volver-hub-desde-espacio:hover {
+    background-color: rgba(212, 175, 55, 0.1) !important; 
+    border-color: #d4af37 !important; 
+    color: #d4af37 !important; 
+    transform: translateY(-1px) !important;
+}
+
 /* ==========================================================================
    📼 ESTILO FANZINE EDITORIAL (SECCIÓN CASSETTE) - REPLICA EXACTA DE COMPOSICIÓN
    ========================================================================== */
@@ -708,18 +915,34 @@ body {
     cursor: pointer;
     transition: all 0.3s ease;
 }
+.espacio-cassette .btn-volver-hub-desde-espacio {
+    all: unset;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #000;
+    color: #fff;
+
+    cursor: pointer;
+}
 .btn-mini-nav-cassette:hover {
     background-color: var(--crema-texto);
     color: var(--color-cassette); /* Invierte los colores al pasar el cursor */
     border-color: var(--crema-texto);
 }
-
-/* Estabilizar el botón STOP / EJECT (Esquina derecha) */
-.barra-navegacion-superior .btn-volver-hub-desde-espacio {
-    margin: 0; /* Removemos márgenes innecesarios que alteren el eje Y */
-    padding: 8px 16px;
-    font-family: 'Special Elite', monospace;
-    font-size: 0.9rem;
+.espacio-cassette #btn-cerrar-espacio:hover {
+    background: #000000;
+    color: #ffffff;
+    border-color: rgba(255, 255, 255, 0.4);
+}
+.espacio-cassette #btn-cerrar-espacio {
+    color: #ffffff;
+}
+.espacio-cassette #btn-cerrar-espacio:hover {
+    box-shadow: none;
+    text-shadow: none;
 }
 .espacio-cassette .mini-tarjeta {
     display: inline-flex;
@@ -773,26 +996,15 @@ body {
     transform: scale(1.05);
 }
 
-/* El botón de salida en la esquina superior derecha */
+/* El botón de salida en la esquina superior IZQUIERDA */
 .espacio-cassette .btn-volver-hub-desde-espacio {
-    background-color: #000000 !important;
-    color: #ffffff !important;
-    border: 2px solid #000000 !important;
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 0.85rem;
-    font-weight: 700;
-    padding: 8px 16px;
-    line-height: normal;
-    box-shadow: none !important;
-    text-shadow: none !important;
-    border-radius: 0px !important;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
+    position: static !important;
 }
-.espacio-cassette .btn-enlace-formato:hover {
-    background-color: #222222 !important;
-    border-color: #222222 !important;
-    transform: scale(1.05);
+
+.espacio-cassette .btn-volver-hub-desde-espacio:hover {
+    background-color: #ff0055 !important; /* Toque fanzine rosa/rojo al pasar el mouse */
+    border-color: #ff0055 !important;
+    color: #ffffff !important;
 }
 
 /* Grilla de Tres Columnas - Ampliada la columna del medio significativamente */
@@ -807,23 +1019,35 @@ body {
 }
 
 /* --- COLUMNA IZQUIERDA: Bloque de Textos Narrativos --- */
-.col-fanzine-izq {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    text-align: left;
+.col-fanzine-vinilo-izq {
+    display: flex !important;
+    flex-direction: column !important;
+    
+    /* 🛠️ MODIFICA ACÁ: Controla la alineación vertical general.
+       'center' lo centra, 'flex-start' lo pega al techo. */
+    justify-content: flex-start !important; 
+
+    /* 🛠️ MODIFICA ACÁ: El truco para moverlo manualmente hacia arriba.
+       - Si querés que suba MÁS: aumentá el número negativo (ej: -40px, -60px, -80px).
+       - Si querés que baje: bajá el número (ej: -10px) o pasalo a positivo (ej: 20px). */
+    margin-top: -450px !important; 
 }
 .bloque-titulo-cassette-fanzine {
-    transform: rotate(-1.5deg);
+    /* 🚀 CONTROL VERTICAL Y ROTACIÓN:
+       - Cambiá el -40px dentro de translateY si querés subirlo más (ej: -60px) o bajarlo (ej: -10px).
+       - Mantiene el rotate(-1.5deg) original. */
+    transform: translateY(-40px) rotate(-1.5deg) !important;
 }
+
 .bloque-titulo-cassette-fanzine .subtitulo-fanzine {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 1rem;
+    font-family: 'Permanent Marker', cursive !important; /* Ahora es 100% rebelde */
+    font-size: 1.2rem !important; /* Un toque más grande para que se lea bien */
     font-weight: 700;
-    letter-spacing: 3px;
+    letter-spacing: 1px !important; /* Ajustado para la tipografía nueva */
     color: #111111;
     display: block;
 }
+
 .bloque-titulo-cassette-fanzine h2 {
     font-family: 'Permanent Marker', cursive !important;
     font-size: 5.5rem !important;
@@ -1240,27 +1464,6 @@ body {
     flex-direction: column;
 }
 /* Contenedor de digitalización */
-.bloque-digitalizacion-formatos {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    padding: 0.5rem 0;
-    max-width: 480px;
-
-    /* 🛡️ TRAER AL FRENTE */
-    position: relative !important;
-    z-index: 10 !important;
-
-    /* 🧼 RESETEO DE MÁRGENES */
-    margin-left: 0 !important;
-    margin-top: 0 !important;
-    margin-bottom: 2.5rem !important;
-
-    /* 🚀 EXTREMADAMENTE A LA DERECHA:
-       - Subí el primer valor a 650px para empujarlo muchísimo más hacia el extremo derecho.
-       - Mantiene el segundo valor (-60px) para que no pierda la altura que querías. */
-    transform: translate(650px, -60px) !important;
-}
 .formato-viejo {
     display: flex;
     flex-direction: column;
@@ -1467,7 +1670,7 @@ body {
     height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     padding-left: 25%;
     gap: 2.5rem;
 }
@@ -1540,19 +1743,19 @@ body {
    🎛️ BARRA DE REPRODUCCIÓN INFERIOR ESTÉTICA
    ========================================================================== */
 .reproductor-barra-inferior {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100vw;
-    height: 90px;
-    background-color: rgba(4, 4, 8, 0.9);
-    backdrop-filter: blur(12px);
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
-    z-index: 100;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 3rem;
+    position: fixed !important;      
+    bottom: -375px !important;            
+    left: -400px !important;              
+    width: 100vw !important;          
+    height: 70px !important;         
+    z-index: 9999 !important;        
+    
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding: 0 20px !important;
+    background-color: #020210 !important; 
+    border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
 }
 
 .espacio-vacio-izq {
@@ -1755,23 +1958,23 @@ body {
    🎮 5. BLOQUE DE "DIGITALIZACIÓN" UNIFICADO Y DESPLAZADO A LA DERECHA
    ========================================================================== */
 .bloque-digitalizacion-formatos {
-    position: fixed !important;   /* Control directo sobre la pantalla global */
-    bottom: -350px !important;    /* Mantiene el apoyo por encima del reproductor */
+    position: absolute !important;   /* Cambiado a absolute para que se mueva respecto a la pantalla digital */
     
-    /* 🚀 CONTROL ABSOLUTO DE LA DERECHA:
-       - Eliminamos el translateX(-50%) que lo volvía a tirar para el centro.
-       - Ahora, cambiando este porcentaje se va a mover perfectamente.
-       - Probá con 65%, 70% o 75% hasta encontrar tu punto ideal en pantalla. */
-    left: 70% !important;
-    transform: none !important;   /* 🧼 Forzamos a quitar el freno que lo congelaba */
+    /* 🚀 CONTROL ABSOLUTO DE POSICIÓN:
+       - Modificá 'left' para moverlo horizontalmente (Menos de 75% = Izquierda, Más de 75% = Derecha).
+       - Modificá 'top' para moverlo verticalmente (Menos de 15% = Arriba, Más de 15% = Abajo). */
+    left: 75% !important;           
+    top: 120% !important;            
     
+    transform: none !important;     /* 🧼 Quitamos cualquier transform que altere la posición */
     width: max-content !important; 
     display: flex !important;
-    justify-content: center !important;
     align-items: center !important;
     gap: 20px !important; 
     z-index: 99 !important;        
     margin: 0 !important;   
+    padding: 0.5rem 0 !important;
+    max-width: 480px !important;
 }
 
 /* Escalado de fuentes e imágenes dentro de digitalización */
@@ -1911,34 +2114,42 @@ body {
 
 
 /* ==========================================================================
-   📻 TIPOGRAFÍAS Y DISEÑO DE SECCIÓN CASSETTE
+   📻 TIPOGRAFÍAS Y DISEÑO DE SECCIÓN CASSETTE (PERMANENT MARKER UNIFICADO)
    ========================================================================== */
 .espacio-cassette .cultura-cassette-contenedor,
 .espacio-cassette .bloque-titulo-cassette-fanzine h2,
 .espacio-cassette .subtitulo-fanzine,
 .espacio-cassette .bloque-parrafo-fanzine p,
-.espacio-cassette .lista-caracteristicas-cassette li {
+.espacio-cassette .lista-caracteristicas-cassette li,
+.espacio-cassette .btn-walkman-mecanico,
+.espacio-cassette .btn-mini-nav-cassette,
+.espacio-cassette span {
     font-family: 'Permanent Marker', cursive, sans-serif !important;
+    letter-spacing: 1px !important; /* Espaciado extra para mejorar la lectura */
 }
 
 /* Imagen Esquina Inferior Izquierda - Cassette */
 .lista-esquina-cassette {
-    position: absolute;
-    bottom: 25px;
-    left: 25px;
-    z-index: 40;
-    width: 150px; /* Tamaño ajustable para el fanzine */
-    height: auto;
-    pointer-events: none;
-    transform: rotate(-3deg); /* Le da un toque manual estilo fanzine */
+    position: absolute !important;
+    bottom: 25px !important;
+    left: 25px !important;
+    z-index: 40 !important;
+    width: 150px !important; /* Tamaño ajustable para el fanzine */
+    height: auto !important;
+    pointer-events: none !important;
+    
+    /* 🚀 CONTROL DE MOVIMIENTO DE LA IMAGEN:
+       Modificá translate(0px, 0px) si querés desplazarla (X = Izquierda/Derecha, Y = Arriba/Abajo)
+       Mantiene el rotate(-3deg) para el toque rebelde de fanzine */
+    transform: translate(0px, 0px) rotate(-3deg) !important; 
 }
 
 .lista-esquina-cassette img {
-    width: 100%;
-    height: auto;
-    display: block;
-    object-fit: contain;
-    filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.6));
+    width: 100% !important;
+    height: auto !important;
+    display: block !important;
+    object-fit: contain !important;
+    filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.6)) !important;
 }
 /* ==========================================================================
    🎵 AJUSTES FINALES: TIPOGRAFÍAS Y COORDENADAS COMPARTIDAS
@@ -2027,7 +2238,7 @@ body {
     
     /* 2) Posición (Eje X, Eje Y)
        - Bajamos a -50px (un poco a la izquierda) y 150px (un poco más abajo) para que aparezca sí o sí. */
-    transform: translate(-300px, 450px) !important;
+    transform: translate(-300px, 350px) !important;
 }
 #canvas-digital {
     position: absolute;
@@ -2039,4 +2250,138 @@ body {
     /* 🧊 ENVIAR ATRÁS: Se queda como fondo y no interfiere con los textos ni imágenes */
     z-index: 1 !important; 
     pointer-events: none !important; 
+}
+.contenedor-celular, 
+.mockup-celular,
+[class*="celular"], 
+[class*="phone"] {
+    width: 640px !important; /* Forzamos un tamaño grande y visible */
+    max-width: 92vw !important;
+    height: auto !important;
+    margin: 0 auto;
+}
+/* ==========================================================================
+   📱 CONTROL TOTAL Y LIBRE DE "CALIDAD" Y "ACCESO" 
+   ========================================================================== */
+.contenido-pantalla-celular-libre {
+    position: absolute !important;   /* Lo despega del flujo y te deja moverlo por la pantalla */
+    z-index: 999 !important;         /* Pasa por encima de cualquier otra capa */
+    
+    /* 🚀 UBICACIÓN GLOBAL EN LA PANTALLA:
+       - 'left': Controla la posición horizontal (ej: 50% centro, 70% derecha, 20% izquierda).
+       - 'top': Controla la posición vertical (ej: 20% arriba, 60% abajo). */
+    left: 60% !important;            
+    top: 35% !important;             
+
+    /* Configuración interna para que las cajitas se muestren prolijas */
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 25px !important;            /* Espacio de separación entre la caja de Calidad y Acceso */
+    width: 280px !important;         /* Ancho fijo para que no se estiren al moverlas */
+}
+
+/* Opcional: Si querés estilizar las cajitas individuales ahora que están sueltas */
+.contenido-pantalla-celular-libre .bloque-cel-item {
+    background: rgba(255, 255, 255, 0.05) !important; /* Un fondo oscuro muy sutil */
+    padding: 15px !important;
+    border-radius: 8px !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+/* Parche para que los contenedores superiores no tapen los clicks del botón */
+.barra-navegacion-superior {
+    position: relative !important;
+    z-index: 99990 !important;
+    pointer-events: none !important; /* Hace transparente al contenedor */
+}
+.barra-navegacion-superior * {
+    pointer-events: auto !important; /* Pero permite interactuar con los elementos de adentro */
+}
+/* --- CORRECCIÓN FORZADA PARA CASSETTE --- */
+
+/* 1. Aseguramos que la pantalla de cassette tome toda la altura disponible */
+.pantalla.espacio-cassette {
+    height: 100vh !important; /* Altura total de la ventana */
+    display: flex !important;
+    flex-direction: column !important;
+    padding: 0 !important;    /* Eliminamos el padding base para que el footer toque el borde */
+    overflow: hidden !important;
+}
+
+/* 2. El contenedor interno debe ocupar todo el espacio, menos el footer */
+.cultura-cassette-contenedor {
+    display: flex !important;
+    flex-direction: column !important;
+    height: 100% !important;
+    width: 100% !important;
+    padding: 40px 40px 0 40px !important; /* Mantenemos margen arriba/lados, pero 0 abajo */
+    box-sizing: border-box !important;
+}
+
+/* 3. El footer (Walkman) debe quedar pegado abajo */
+.footer-fanzine-walkman {
+    margin-top: auto !important; /* Esto empuja al footer al fondo del contenedor */
+    width: 100% !important;
+    flex-shrink: 0 !important;    /* Evita que se encoja */
+    padding: 20px 40px !important;
+    box-sizing: border-box !important;
+}
+/* --- CONTROL DE GRAFFITI --- */
+.img-graffiti-libre {
+    display: none !important; 
+    position: absolute !important;
+    z-index: 1000 !important;
+    pointer-events: none !important; /* Evita que bloquee clics en botones */
+    
+    /* POSICIÓN, TAMAÑO Y ROTACIÓN (AJUSTA ESTOS VALORES) */
+    top: 215px !important; 
+    left: 1400px !important;
+    width: 730px !important; /* Tamaño */
+    transform: rotate(15deg) !important; /* Rotación */
+}
+
+/* Solo aparece cuando el contenedor tiene la clase espacio-cassette */
+.pantalla.espacio-cassette .img-graffiti-libre {
+    display: block !important;
+}
+/* --- AJUSTE DE LA BARRA DE REPRODUCCIÓN (SECCIÓN DIGITAL) --- */
+
+/* Aseguramos que el contenedor de la sección digital permita posicionar hijos */
+.pantalla.espacio-digital {
+    position: relative !important;
+}
+
+/* Ajuste fino de la barra */
+.reproductor-barra-inferior.simun-player {
+    position: absolute !important;
+    
+    /* MODIFICA ESTOS VALORES PARA MOVERLA */
+    bottom: -420px !important;  /* Distancia desde abajo (sube o baja) */
+    left: 50% !important;     /* Centrado horizontal */
+    
+    transform: translateX(-50%) !important; /* Mantiene el centrado perfecto */
+    width: 190% !important;    /* Ajusta el ancho si es necesario */
+    
+    z-index: 1000 !important; /* Asegura que esté por encima de otros elementos */
+    background: rgba(0, 0, 0, 0.2); /* Opcional: fondo sutil para verla mejor */
+    padding: 10px 20px;
+    border-radius: 50px;
+}
+/* 1. Ocultar la imagen por defecto en todas las secciones */
+.img-extra-vinilo {
+    display: none !important; 
+}
+
+/* 2. Mostrar la imagen SOLAMENTE cuando la pantalla tiene la clase 'espacio-vinilo' */
+.pantalla.espacio-vinilo .img-extra-vinilo {
+    display: block !important;
+    position: absolute !important;
+    bottom: 20px !important;
+    left: 20px !important;
+    
+    /* PRUEBA ESTOS VALORES */
+    width: 1000px !important;       /* Un tamaño que debería verse bien */
+    max-width: 90vw !important;    /* Nunca será más ancha que la pantalla */
+    height: auto !important;       /* Importante para no deformar la imagen */
+    
+    z-index: 1000 !important;
 }

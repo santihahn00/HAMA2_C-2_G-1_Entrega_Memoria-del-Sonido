@@ -106,8 +106,14 @@ function entrarAEspacio(id) {
     pHub.classList.remove('activa');
     pEspacio.classList.remove('activa');
 
+    // Cambiamos la clase de la pantalla y le agregamos estilos forzados de color claro para que el texto no sea invisible
     pEspacio.className = 'pantalla';
     pEspacio.classList.add(formatosData[id].clase);
+    pEspacio.style.color = "#f5f1ea"; // Asegura texto claro en fondos oscuros
+
+    // Capturamos el nuevo contenedor interno seguro
+    const contenedorDinamico = document.getElementById('contenedor-dinamico-espacio');
+    const graffiti = document.querySelector('.img-graffiti-libre');
     
     if (idAnimacionDigital) { cancelAnimationFrame(idAnimacionDigital); }
     if (audioAmbienteEspacio) { audioAmbienteEspacio.pause(); }
@@ -117,14 +123,15 @@ function entrarAEspacio(id) {
     // ==================================================================
     
     if (id === 'cinta') {
-        audioAmbienteEspacio = document.getElementById('audio-final-cinta');
+        audioAmbienteEspacio = document.getElementById('fondoCinta');
         if (audioAmbienteEspacio) {
             audioAmbienteEspacio.volume = 0.3;
             audioAmbienteEspacio.currentTime = 0;
             audioAmbienteEspacio.play().catch(() => {});
         }
 
-        pEspacio.innerHTML = `
+        // Modificado: Ahora inyectamos en contenedorDinamico
+        contenedorDinamico.innerHTML = `
             <button class="btn-volver-hub-desde-espacio" id="btn-cerrar-espacio">← DETENER MECANISMO</button>
             <div class="plano-industrial-contenedor">
                 <header class="bloque-titulo-industrial">
@@ -145,54 +152,91 @@ function entrarAEspacio(id) {
         `;
     } 
     else if (id === 'vinilo') {
-        audioAmbienteEspacio = document.getElementById('audio-final-vinilo');
+        audioAmbienteEspacio = document.getElementById('fondoVinilo');
         if (audioAmbienteEspacio) {
             audioAmbienteEspacio.volume = 0.4;
             audioAmbienteEspacio.currentTime = 0;
             audioAmbienteEspacio.play().catch(() => {});
         }
 
-        pEspacio.innerHTML = `
-            <button class="btn-volver-hub-desde-espacio" id="btn-cerrar-espacio">← LEVANTAR PÚA</button>
+        // Modificado: Ahora inyectamos en contenedorDinamico
+        contenedorDinamico.innerHTML = `
             <div class="ritual-vinilo-contenedor">
-                <header class="bloque-titulo-vinilo">
-                    <span class="subtitulo-elegante">El ritual de la alta fidelidad</span>
-                    <h2>Vinilo</h2>
-                </header>
-                <div class="cuerpo-vinilo">
-                    <div class="columna-texto-vinilo">
-                        <p class="texto-alta-costura">UN SURCO TALLADO EN ESPIRAL QUE CONTIENE EL TIEMPO. EL VINILO EXIGE ATENCIÓN, UN RITUAL PAUSADO DE MANOS LIMPIAS, PÚAS DE DIAMANTE Y EL CALOR ACÚSTICO QUE SOLO LA MATERIA PURA PUEDE ENTREGAR AL ENTRAR EN CONTACTO CON LA GEOMETRÍA DEL PLÁSTICO.</p>
-                    </div>
-                    <div class="columna-galeria-vinilo">
-                        <div class="marco-dorado-delgado"><img src="imagen/vinilo.png" alt="Disco Vinilo"></div>
-                    </div>
+                <div class="textura-clasica-filtro"></div>
+                
+                <div class="barra-navegacion-superior-vinilo">
+                    <div class="mini-navegacion-nombres-vinilo" id="contenedor-mini-nav"></div>
+                    <button class="btn-volver-hub-desde-espacio" id="btn-cerrar-espacio">← LEVANTAR PÚA</button>
                 </div>
-                <div class="mini-navegacion" id="contenedor-mini-nav"></div>
+
+                <div class="grilla-fanzine-vinilo">
+                    
+                    <div class="col-fanzine-vinilo-izq">
+                        <header class="bloque-titulo-vinilo-fanzine">
+                            <span class="subtitulo-fanzine-vinilo">CONCIERTO EN ALTA FIDELIDAD</span>
+                            <h2>VINILO</h2>
+                        </header>
+                        <div class="bloque-parrafo-vinilo-fanzine">
+                            <p>UN SURCO TALLADO EN ESPIRAL QUE CONTIENE EL TIEMPO. EL VINILO EXIGE ATENCIÓN, UN RITUAL PAUSADO DE MANOS LIMPIAS, PÚAS DE DIAMANTE Y EL CALOR ACÚSTICO QUE SOLO LA MATERIA PURA PUEDE ENTREGAR AL ENTRAR EN CONTACTO CON LA GEOMETRÍA DEL PLÁSTICO.</p>
+                        </div>
+                    </div>
+
+                    <div class="col-fanzine-vinilo-derecha-obra">
+                        <div class="contenedor-vinilo-capsula">
+                            <img src="imagen/vinilo.png" alt="Disco Vinilo" class="img-vinilo-disco bn-filtro">
+                            <div class="marco-dorado-fino">
+                                <img src="imagen/vinilo-cover.png" alt="Carátula Vinilo" class="img-vinilo-cover">
+                                <div class="contenido-texto-portada">
+                                    <ul class="lista-caracteristicas-vinilo">
+                                        <li><span class="marcador-vinilo-flecha">◇</span> SURCO MECÁNICO CONTÍNUO</li>
+                                        <li><span class="marcador-vinilo-flecha">◇</span> FRICCIÓN NATURAL DE AGUJA</li>
+                                        <li><span class="marcador-vinilo-flecha">◇</span> CALIDEZ ACÚSTICA ANALÓGICA</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
             </div>
         `;
-    } 
+        setTimeout(() => {
+            const viniloExtra = document.querySelector('.img-extra-vinilo'); 
+            
+            if (viniloExtra) {
+                viniloExtra.style.cursor = 'pointer'; 
+                viniloExtra.addEventListener('click', () => {
+                    reproducirAudioInteraccion('sonido/infoVinilo.mp3');
+                });
+            }
+}, 200);
+    }
     else if (id === 'cassette') {
         const audioClack = new Audio('sonido/clack-walkman.mp3');
+        graffiti.style.top = '300px';
+        graffiti.style.left = '1500px';
         audioClack.volume = 0.6;
         audioClack.play().catch(() => {});
 
-        audioAmbienteEspacio = document.getElementById('audio-final-cassette');
+        audioAmbienteEspacio = document.getElementById('fondoCassette');
         if (audioAmbienteEspacio) {
             audioAmbienteEspacio.volume = 0.5;
             audioAmbienteEspacio.currentTime = 0;
             setTimeout(() => { audioAmbienteEspacio.play().catch(() => {}); }, 200);
         }
 
-        pEspacio.innerHTML = `
+        // Modificado: Ahora inyectamos en contenedorDinamico
+        contenedorDinamico.innerHTML = `
             <div class="cultura-cassette-contenedor">
-                
                 <div class="barra-navegacion-superior">
                     <div class="mini-navegacion-nombres" id="contenedor-mini-nav"></div>
-                    <button class="btn-volver-hub-desde-espacio" id="btn-cerrar-espacio">← STOP / EJECT</button>
+                    <button class="btn-volver-hub-desde-espacio btn-mini-nav-cassette"
+                                id="btn-cerrar-espacio">
+                            ← STOP / EJECT
+                        </button>
                 </div>
 
                 <div class="grilla-fanzine-cassette">
-                    
                     <div class="col-fanzine-izq">
                         <header class="bloque-titulo-cassette-fanzine">
                             <span class="subtitulo-fanzine">PORTÁTIL Y REBELDE</span>
@@ -201,7 +245,6 @@ function entrarAEspacio(id) {
                         <div class="bloque-parrafo-fanzine">
                             <p>EL SONIDO SE HACE PORTÁTIL, REBELDE Y PROPIO. GRABAR DE LA RADIO, ESCRIBIR LA ETIQUETA A MANO CON MARCADOR Y SALIR A LA CALLE. LA LIBERTAD DE LLEVAR TU MÚSICA EN EL BOLSILLO BAJO LAS LUCES DE LA CIUDAD ENREDA LA CINTA CON UNA BIROME.</p>
                         </div>
-
                         <div class="lista-esquina-cassette">
                             <img src="imagen/lista-cassettes.png" alt="Lista de Cassettes">
                         </div>
@@ -220,7 +263,6 @@ function entrarAEspacio(id) {
                             <li><span class="marcador-vinculo">➔</span> RUIDO DEL MECANISMO</li>
                         </ul>
                     </div>
-
                 </div>
 
                 <footer class="footer-fanzine-walkman">
@@ -237,30 +279,37 @@ function entrarAEspacio(id) {
                             <div class="carrete-der"></div>
                         </div>
                     </div>
-
                     <div class="contenedor-walkman-auriculares">
                         <img src="imagen/walkman-auriculares.png" alt="Walkman con auriculares" class="img-walkman-retro">
                     </div>
                 </footer>
             </div>
         `;
+        setTimeout(() => {
+            const imagenWalkman = document.querySelector('.img-walkman-retro');
+            if (imagenWalkman) {
+                imagenWalkman.style.cursor = 'pointer';
+                imagenWalkman.addEventListener('click', () => {
+                    reproducirAudioInteraccion('sonido/infoCassette.mp3');
+                });
+            }
+        }, 200);
     }
-else if (id === 'digital') {
+    else if (id === 'digital') {
         try {
-            audioAmbienteEspacio = new Audio('sonido/encendido-digital.mp3');
-            audioAmbienteEspacio.volume = 0.4;
-            audioAmbienteEspacio.loop = true; 
-            audioAmbienteEspacio.currentTime = 0;
-            let playPromise = audioAmbienteEspacio.play();
-            if (playPromise !== undefined) {
-                playPromise.catch(() => { console.log("Audio esperando click para reproducir."); });
+            audioAmbienteEspacio = document.getElementById('fondoDigital');   
+            if (audioAmbienteEspacio) {
+                audioAmbienteEspacio.volume = 0.4;
+                audioAmbienteEspacio.loop = true;
+                audioAmbienteEspacio.currentTime = 0;
+                audioAmbienteEspacio.play().catch(() => console.log("Audio esperando interacción"));
             }
         } catch(e) {
             console.error("Error cargando sonido digital:", e);
         }
 
-        // ... dentro de else if (id === 'digital')
-        pEspacio.innerHTML = `
+        // Modificado: Ahora inyectamos en contenedorDinamico
+        contenedorDinamico.innerHTML = `
             <button class="btn-volver-hub-desde-espacio" id="btn-cerrar-espacio">← SYSTEM.EXIT()</button>
             <canvas id="canvas-digital"></canvas>
 
@@ -271,7 +320,6 @@ else if (id === 'digital') {
             </div>
 
             <div class="replica-digital-contenedor">
-                
                 <div class="columna-info-digital">
                     <div class="bloque-digitalizacion-formatos">
                         <div class="formato-viejo">
@@ -279,13 +327,11 @@ else if (id === 'digital') {
                             <span>CINTA</span>
                         </div>
                         <div class="flecha-flujo">➔</div>
-                        
                         <div class="formato-viejo">
                             <img src="imagen/silueta-vinilo.png" alt="Vinilo" class="img-formato-silueta">
                             <span>VINILO</span>
                         </div>
                         <div class="flecha-flujo">➔</div>
-                        
                         <div class="formato-viejo">
                             <img src="imagen/silueta-cassette.png" alt="Cassette" class="img-formato-silueta">
                             <span>CASSETTE</span>
@@ -296,7 +342,7 @@ else if (id === 'digital') {
                         </div>
                     </div>
 
-                    <span class="codigo-bites">01000100 01001001 01000111 01001001 01010100 01000001 01001100</span>
+                    <span class="codigo-bites">01000101 01010010 01000001 00100000 01000101 01010010 01000001</span>
                     <h2 class="titulo-seccion-digital">CD / DIGITAL</h2>
                     <h3 class="sub-seccion-digital">MÚSICA SIN LÍMITES</h3>
                     <p class="texto-futurista">Del disco físico al streaming. La era digital llevó toda la música a cualquier lugar del mundo al instante.</p>
@@ -306,30 +352,30 @@ else if (id === 'digital') {
                     </div>
                 </div>
 
-                <div class="columna-mockup-digital">
-                    <div class="telefono-interfaz">
-                        <img src="imagen/celular-mockup.png" class="img-celular-marco" alt="Smartphone">
-                        <div class="contenido-pantalla-celular">
-                            <div class="bloque-cel-item">
-                                <div class="ondas-icono-animado">
-                                    <span></span><span></span><span></span><span></span><span></span>
-                                </div>
-                                <div class="texto-cel-item">
-                                    <h4>CALIDAD</h4>
-                                    <p>SONIDO LIMPIO</p>
-                                </div>
-                            </div>
-                            <div class="bloque-cel-item">
-                                <div class="play-icono-circulo">▶</div>
-                                <div class="texto-cel-item">
-                                    <h4>ACCESO</h4>
-                                    <p>MILES DE CANCIONES AL INSTANTE</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+       <div class="columna-mockup-digital">
+    <div class="telefono-interfaz" style="position: relative;">
+        <img src="imagen/celular-mockup.png" class="img-celular-marco" alt="Smartphone">
+    </div>
+
+    <div class="contenido-pantalla-celular-libre">
+        <div class="bloque-cel-item">
+            <div class="ondas-icono-animado">
+                <span></span><span></span><span></span><span></span><span></span>
             </div>
+            <div class="texto-cel-item">
+                <h4>CALIDAD</h4>
+                <p>SONIDO LIMPIO</p>
+            </div>
+        </div>
+        <div class="bloque-cel-item">
+            <div class="play-icono-circulo">▶</div>
+            <div class="texto-cel-item">
+                <h4>ACCESO</h4>
+                <p>MILES DE CANCIONES AL INSTANTE</p>
+            </div>
+        </div>
+    </div>
+</div>
 
             <div class="reproductor-barra-inferior simun-player">
                 <div class="espacio-vacio-izq"></div>
@@ -353,6 +399,14 @@ else if (id === 'digital') {
         `;
 
         setTimeout(inicializarEfectoDigital, 100);
+        setTimeout(() => {
+            const btnPause = document.querySelector('.play-main');
+            if (btnPause) {
+                btnPause.addEventListener('click', () => {
+                    reproducirAudioInteraccion('sonido/infoDigital.mp3');
+                });
+            }
+        }, 200);
     }
 
     // --- ASIGNACIÓN DE EVENTOS INMEDIATA TRAS INYECTAR EL DOM ---
@@ -360,6 +414,7 @@ else if (id === 'digital') {
     if (btnCerrar) {
         btnCerrar.addEventListener('click', () => {
             pEspacio.className = 'pantalla';
+            pEspacio.style.color = ""; // Limpiamos el estilo inline de color al salir
             if (audioAmbienteEspacio) { audioAmbienteEspacio.pause(); }
             if (idAnimacionDigital) { cancelAnimationFrame(idAnimacionDigital); }
             
@@ -373,7 +428,6 @@ else if (id === 'digital') {
     // --- CREACIÓN DINÁMICA DE LA MINI-NAVEGACIÓN INTERNA ---
     const miniNavContenedor = document.getElementById('contenedor-mini-nav');
     if (miniNavContenedor) {
-        // SI ESTAMOS EN CASSETTE:
         if (id === 'cassette') {
             Object.keys(formatosData).forEach(key => {
                 if (key !== id) {
@@ -389,7 +443,6 @@ else if (id === 'digital') {
                 }
             });
         } 
-        // SI ESTAMOS EN OTROS ESPACIOS: Mantiene las mini-tarjetas normales
         else {
             Object.keys(formatosData).forEach(key => {
                 if (key !== id) {
@@ -413,7 +466,6 @@ else if (id === 'digital') {
     comprobarProgresoFormatos();
     setTimeout(() => { pEspacio.classList.add('activa'); }, 150);
 }
-
 // --- 🎮 MOTOR GRÁFICO DIGITAL (CANVAS) - ¡ÚNICA VERSIÓN LIMPIA! ---
 function inicializarEfectoDigital() {
     const canvas = document.getElementById('canvas-digital');
@@ -506,45 +558,56 @@ function comprobarProgresoFormatos() {
 // --- 🎬 MULTIPLEXACIÓN DE AUDIOS EN LA GRILLA FINAL ---
 function inicializarVideosInteractivos() {
     const cuadrantes = document.querySelectorAll('.cuadrante-interactivo');
-    
+
     cuadrantes.forEach(cuadrante => {
         const video = cuadrante.querySelector('video');
-        const audioId = cuadrante.getAttribute('data-audio');
-        const audioAsociado = document.getElementById(audioId);
-        
+
         cuadrante.addEventListener('mouseenter', () => {
-            if(video) {
+            if (video) {
                 video.currentTime = 0;
+                video.muted = false;
                 video.play().catch(() => {});
             }
-            if(audioAsociado) {
-                audioAsociado.currentTime = 0;
-                audioAsociado.volume = 0.7;
-                audioAsociado.play().catch(() => {});
-            }
         });
-        
+
         cuadrante.addEventListener('mouseleave', () => {
-            if(video) video.pause();
-            if(audioAsociado) audioAsociado.pause();
+            if (video) {
+                video.pause();
+                video.currentTime = 0;
+            }
         });
     });
 }
 
 // Volver al Hub desde la pantalla final
 const btnRegresar = document.getElementById('btn-regresar-a-hub');
+
 if (btnRegresar) {
     btnRegresar.addEventListener('click', () => {
+
         pFinal.classList.remove('activa');
-        
-        document.querySelectorAll('.cuadrante-interactivo video').forEach(v => v.pause());
-        Object.keys(formatosData).forEach(key => {
-            const aud = document.getElementById(`audio-final-${key}`);
-            if(aud) aud.pause();
+
+        document.querySelectorAll('.cuadrante-interactivo video').forEach(v => {
+            v.pause();
+            v.currentTime = 0;
         });
-        
+
         setTimeout(() => {
             pHub.classList.add('activa');
         }, 600);
     });
+}
+function reproducirAudioInteraccion(rutaAudio) {
+    const audioPuntual = new Audio(rutaAudio);
+    const musicaDeFondo = audioAmbienteEspacio;
+    
+    // Pausamos la música de fondo si existe
+    if (musicaDeFondo) musicaDeFondo.pause();
+
+    audioPuntual.play().catch(e => console.log("Audio de info bloqueado"));
+
+    // Cuando termina la info, reanudamos la música
+    audioPuntual.onended = () => {
+        if (musicaDeFondo) musicaDeFondo.play().catch(e => console.log("No se pudo reanudar"));
+    };
 }
