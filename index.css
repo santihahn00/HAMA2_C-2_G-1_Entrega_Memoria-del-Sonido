@@ -971,13 +971,84 @@ body {
 
 /* Imagen del Walkman Retro (Esquina Derecha) */
 .contenedor-walkman-auriculares {
-    display: flex;
-    justify-content: flex-end;
+    position: relative; /* 👈 Permitirá posicionar las notas musicales en base a este contenedor */
+    display: inline-block;
 }
+
 .img-walkman-retro {
-    width: 500px; /* Se respeta el tamaño gigante asignado */
+    width: 100%;
     height: auto;
-    filter: drop-shadow(5px 5px 8px rgba(0,0,0,0.3));
+    display: block;
+    /* 👈 Asignamos la animación de balanceo rítmico */
+    animation: balanceoWalkman 1s ease-in-out infinite;
+    transform-origin: bottom center; /* El balanceo pivota desde su base */
+}
+@keyframes balanceoWalkman {
+    0%, 100% {
+        transform: rotate(-4deg);
+    }
+    50% {
+        transform: rotate(4deg);
+    }
+}
+
+/* --- Notas Musicales Ajustadas (Más grandes, cerca y amarillas) --- */
+.contenedor-walkman-auriculares::before,
+.contenedor-walkman-auriculares::after {
+    position: absolute;
+    font-family: Arial, sans-serif;
+    font-size: 2.6rem; /* 👈 MODIFICADO: Notas más grandes */
+    color: #ffcc00;    /* 👈 MODIFICADO: Color amarillo retro */
+    opacity: 0;
+    pointer-events: none;
+    z-index: 25;
+    text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.2); /* Sutil relieve */
+}
+
+/* Nota Musical 1 (Izquierda) */
+.contenedor-walkman-auriculares::before {
+    content: "♪";
+    left: -5px;       /* 👈 MODIFICADO: Más cerca del dibujo */
+    top: 15px;
+    animation: flotarNotaUno 3.5s ease-in-out infinite;
+}
+
+/* Nota Musical 2 (Derecha) */
+.contenedor-walkman-auriculares::after {
+    content: "♫";
+    right: 5px;       /* 👈 MODIFICADO: Más cerca del dibujo */
+    top: -5px;
+    animation: flotarNotaDos 4s ease-in-out infinite;
+    animation-delay: 1.5s; /* Desfasada para que no salgan al mismo tiempo */
+}
+
+/* Animaciones de flotación y desvanecido para las notas (Recorrido más corto) */
+@keyframes flotarNotaUno {
+    0% {
+        transform: translate(0, 10px) scale(0.8) rotate(-10deg);
+        opacity: 0;
+    }
+    50% {
+        opacity: 0.9;
+    }
+    100% {
+        transform: translate(-10px, -25px) scale(1.2) rotate(15deg); /* Desplazamiento más corto */
+        opacity: 0;
+    }
+}
+
+@keyframes flotarNotaDos {
+    0% {
+        transform: translate(0, 10px) scale(0.8) rotate(10deg);
+        opacity: 0;
+    }
+    50% {
+        opacity: 0.9;
+    }
+    100% {
+        transform: translate(10px, -30px) scale(1.2) rotate(-15deg); /* Desplazamiento más corto */
+        opacity: 0;
+    }
 }
 /* ==========================================================================
    🌐 DISEÑO CONCEPTUAL: LA METAMORFOSIS INMATERIAL (DIGITAL)
