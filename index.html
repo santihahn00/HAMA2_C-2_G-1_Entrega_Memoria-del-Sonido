@@ -3,17 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ecos del Archivo - Experiencia Interactiva</title>
+    <title>HAMA 2_C 2_G 1_EntregaFinal_EcosdelArchivo_Argüelles, Da Rocha_Hahn_Rivero_Sanabria_Sánchez Usnayo</title>
     <link rel="stylesheet" href="index.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Space+Grotesk:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
+
+    <!-- AUDIOS -->
     <audio id="fondoCinta" src="sonido/fondoCinta.mp3" preload="auto" loop></audio>
     <audio id="fondoVinilo" src="sonido/fondoVinilo.wav" preload="auto" loop></audio>
     <audio id="fondoCassette" src="sonido/fondoCassette.wav" preload="auto" loop></audio>
     <audio id="fondoDigital" src="sonido/fondoDigital.mp3" preload="auto" loop></audio>
-    <audio id="audio-cassette-inicial" src="sonido/ruidoCassette.mp3"    preload="auto" loop></audio>
+    <audio id="audio-cinta-inicial" src="sonido/ruidoCinta.mp3" preload="auto" loop></audio>
 
+    <!-- TÍTULO -->
     <section id="pantalla-titulo" class="pantalla activa">
         <div class="contenedor-titulo-editorial">
             <span class="subtitulo-bienvenida">MUESTRA HISTÓRICA & ACÚSTICA</span>
@@ -22,6 +25,7 @@
         </div>
     </section>
 
+    <!-- EXPLICACIÓN -->
     <section id="pantalla-explicacion" class="pantalla">
         <div id="mosaico-flotante"></div>
         <div class="contenedor-texto-explicativo">
@@ -29,6 +33,7 @@
         </div>
     </section>
 
+    <!-- HUB -->
     <section id="pantalla-hub" class="pantalla">
         <div class="contenedor-hub-estructurado">
             <header class="cabecera-hub-archivo">
@@ -37,6 +42,7 @@
             </header>
 
             <div class="grilla-formatos-inicial">
+
                 <article class="tarjeta-formato" data-formato="cinta">
                     <div class="caja-img"><img src="imagen/cinta.png" alt="Cinta"></div>
                     <h3>Cinta</h3>
@@ -56,6 +62,7 @@
                     <div class="caja-img"><img src="imagen/digital.png" alt="Digital"></div>
                     <h3>Digital</h3>
                 </article>
+
             </div>
 
             <article class="tarjeta-misterio bloqueado" id="tarjeta-incognita">
@@ -64,54 +71,69 @@
         </div>
     </section>
 
-<section id="pantalla-espacio" class="pantalla">
+    <!-- ESPACIO DINÁMICO -->
+    <section id="pantalla-espacio" class="pantalla">
+
         <div id="contenedor-dinamico-espacio"></div>
-        
         <img src="imagen/extra-vinilo.png" alt="Decoración Vinilo" class="img-extra-vinilo">
+        
         <img src="imagen/marco-graffiti.png" alt="Graffiti" class="img-graffiti-libre">
+
     </section>
 
+    <!-- FINAL -->
     <section id="pantalla-final" class="pantalla">
+
         <button class="btn-volver-esquina" id="btn-regresar-a-hub">← Soportes</button>
 
         <div class="seccion-comparativa">
             <h2 class="titulo-editorial-final">¿Podes escuchar la diferencia?</h2>
-            
-            <!-- Volvemos a la grilla original: Cuadros grandes, sin texto inferior -->
+
             <div class="grilla-videos-interactivos">
 
-                <div class="cuadrante-interactivo">
-                    <video loop src="video/videoDigital.mp4"></video>
-                </div>
+        <!-- CUADRANTE 1 -->
+        <div class="cuadrante-interactivo">
+            <video src="imagen/videoCassette.mp4" muted loop preload="auto"></video>
+            <audio src="sonido/comparacionCassette.mp3"></audio>
+        </div>
 
-                <div class="cuadrante-interactivo">
-                    <video loop src="video/videoVinilo.mp4"></video>
-                </div>
+        <!-- CUADRANTE 2 -->
+        <div class="cuadrante-interactivo">
+            <video src="imagen/videoCinta.mp4" muted loop preload="auto"></video>
+            <audio src="sonido/comparacionCinta.mp3"></audio>
+        </div>
 
-                <div class="cuadrante-interactivo">
-                    <video loop src="video/videoCinta.mp4"></video>
-                </div>
+        <!-- CUADRANTE 3 -->
+        <div class="cuadrante-interactivo">
+            <video src="imagen/videoDigital.mp4" muted loop preload="auto"></video>
+            <audio src="sonido/comparacionDigital.mp3"></audio>
+        </div>
 
-                <div class="cuadrante-interactivo">
-                    <video loop src="video/videoCassette.mp4"></video>
-                </div>
+        <!-- CUADRANTE 4 -->
+        <div class="cuadrante-interactivo">
+            <video src="imagen/videoVinilo.mp4" muted loop preload="auto"></video>
+            <audio src="sonido/comparacionVinilo.mp3"></audio>
+        </div>
 
-            </div>
+    </div>
         </div>
 
         <div class="seccion-documental">
+
             <div class="bloque-introductorio-video">
                 <h3>El Registro Material</h3>
-                <p>A través de las décadas, la captura del espectro sonoro ha oscilado entre imperfecciones mecánicas entrañables y la frialdad matemática de los entornos modernos. El siguiente fragmento profundiza en los procesos analógicos que definieron la identidad sonora de una era.</p>
+                <p>
+                    A través de las décadas, la captura del espectro sonoro ha oscilado entre imperfecciones mecánicas entrañables y la frialdad matemática de los entornos modernos. 
+                </p>
             </div>
 
-            <div class="contenedor-video-fijo">
-                <video controls poster="imagen/thumbnail.jpeg">
-                    <source src="imagen/DOCU PARA WEB.mp4" type="video/mp4">
-                    Tu navegador no soporta video.
-                </video>
-            </div>
+            
         </div>
+<footer>
+            <p>Historia Analítica de los Medios Audiovisuales II – Cátedra Manetti – FADU – UBA</p>
+            <p class="aclaracion">Grupo 12  Argüelles - Da Rocha - Hahn - Rivero - Sanabria - Sánchez Usnayo  </p>
+            <p class="aclaracion">Comisión 2 - Julián-Luna-Delfina 2º Cuatrimestre.</p>
+        </footer>
     </section>
 
     <script src="index.js"></script>

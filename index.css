@@ -4,6 +4,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Special+Elite&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&display=swap');
 :root {
     /* Paleta de catálogo de museo moderno */
     --fondo-archivo-claro: #f5f1ea;   /* Color hueso mate refinado de la imagen */
@@ -12,10 +13,7 @@
     --dorado-siena: #b8975f;          /* Tono siena/oro viejo apagado */
     
     /* Mantenemos tus colores conceptuales para el interior de los formatos */
-    --color-cassette: #3a0808; 
-    --color-digital: #001144;  
-    --color-cinta: #5a2205;    
-    --color-vinilo: #052507;  
+
      --crema-texto: #f7f4ef; 
 }
 
@@ -29,7 +27,8 @@ body {
     background-color: var(--fondo-archivo-claro);
     color: var(--texto-negro-editorial);
     font-family: 'Playfair Display', serif;
-    overflow: hidden;
+    overflow-y: auto;
+    overflow-x: hidden;
     height: 100vh;
     width: 100vw;
 }
@@ -50,6 +49,7 @@ body {
     left: 0;
     width: 100vw;
     height: 100vh;
+    overflow: hidden;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -65,6 +65,7 @@ body {
     opacity: 1;
     pointer-events: auto;
     z-index: 2;
+    overflow-y: auto;
 }
 
 /* ─── PANTALLA DE TÍTULO ─── */
@@ -77,7 +78,7 @@ body {
 
 .subtitulo-bienvenida {
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 11px;
+    font-size: 14px;
     font-weight: 600;
     letter-spacing: 7px;
     color: var(--dorado-siena);
@@ -144,10 +145,12 @@ body {
 /* Estilos para las imágenes que crea tu index.js dinámicamente */
 .img-flotante {
     position: absolute;
-    width: 160px; /* Un poco más grandes para que luzcan en el fondo */
+    width: 160px;
     height: auto;
-    opacity: 0.15; 
-    filter: grayscale(100%) contrast(90%);
+    opacity: 0.18; /* un poquito más visible */
+    filter: grayscale(100%) contrast(95%);
+    pointer-events: none;
+    transition: transform 0.3s ease;
 }
 
 @keyframes moverHaciaArriba {
@@ -191,7 +194,8 @@ body {
 
 .grilla-formatos-inicial {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(2, 1fr) !important;
+    grid-template-rows: repeat(2, 1fr) !important;
     gap: 30px;
     width: 100%;
     margin-bottom: 40px;
@@ -355,9 +359,18 @@ body {
    ========================================================================== */
 .seccion-comparativa {
     width: 100% !important;
-    max-width: 1400px !important; /* Mayor ancho permitido en pantallas grandes */
+    max-width: 1400px !important;
+
     margin: 0 auto;
-    padding: 40px 20px;
+
+    /* 👇 esto es lo importante */
+    padding: 160px 20px 80px 20px !important;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    gap: 40px;
 }
 
 .titulo-editorial-final {
@@ -367,29 +380,40 @@ body {
     font-weight: 400 !important;
     text-align: center;
     color: var(--texto-negro-editorial) !important;
-    margin-bottom: 40px;
+    margin-top: 200px;
+    margin-bottom: 0px;
 }
 
 .grilla-videos-interactivos {
     display: grid !important;
-    grid-template-columns: repeat(4, 1fr) !important;
-    gap: 30px !important; /* Más separación elegante */
-    width: 100% !important;
-    max-width: 100% !important;
-}
+    grid-template-columns: repeat(2, 1fr) !important;
+    grid-template-rows: repeat(2, 1fr) !important;
 
+    gap: 0 !important;
+
+    width: 95vw;
+    max-width: 1100px;
+
+    height: 70vh;   /* 👈 clave: controla tamaño sin romper el grid */
+
+    margin: 0 auto;
+}
 .cuadrante-interactivo {
-    aspect-ratio: 1 / 1 !important;
-    width: 100% !important;
-    min-width: 220px !important; /* Asegura que no se colapsen en pantallas chicas */
+    width: 100%;
+    height: 100%;
+    aspect-ratio: auto !important;
+
+    margin: 0 !important;
+    border-radius: 0 !important;
+
     background-color: #ffffff;
     border: 1px solid rgba(0, 0, 0, 0.08) !important;
-    border-radius: 6px !important;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.04) !important;
+    box-shadow: none !important;
+
+    overflow: hidden;
 }
 
 .cuadrante-interactivo:hover {
-    transform: scale(1.03);
     border-color: var(--dorado-siena);
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.06);
 }
@@ -398,6 +422,7 @@ body {
     width: 100% !important;
     height: 100% !important;
     object-fit: cover !important;
+    display: block;
 }
 
 .etiqueta-video-formato {
@@ -479,104 +504,7 @@ body {
     width: 100%;
     display: block;
 }
-/* ==========================================================================
-   ⚙️ DISEÑO CONCEPTUAL: LA ERA INDUSTRIAL (CINTA)
-   ========================================================================== */
 
-/* Fondo con escala de grises texturizada y grano */
-.espacio-cinta {
-    background-color: #121212 !important;
-    background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('imagen/textura-carbon.jpg') !important;
-    background-size: cover;
-    background-blend-mode: overlay;
-    filter: grayscale(1); /* Fuerza que todo lo que esté adentro sea monocromático */
-}
-
-/* Contenedor tipo plano técnico del siglo XIX */
-.plano-industrial-contenedor {
-    width: 85%;
-    max-width: 1100px;
-    height: 85vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    border: 4px solid #ffffff; /* Líneas divisorias gruesas */
-    padding: 2rem;
-    box-sizing: border-box;
-}
-
-.bloque-titulo-industrial {
-    text-align: left;
-    border-bottom: 4px solid #ffffff; /* Línea industrial */
-    padding-bottom: 1rem;
-}
-
-.bloque-titulo-industrial span {
-    font-family: 'Special Elite', monospace;
-    font-size: 0.8rem;
-    letter-spacing: 2px;
-    color: rgba(255,255,255,0.6);
-}
-
-.bloque-titulo-industrial h2 {
-    font-family: 'Special Elite', monospace !important;
-    font-size: 2.8rem !important;
-    text-transform: uppercase;
-    margin-top: 0.5rem;
-}
-
-/* Distribución del contenido interno */
-.cuerpo-industrial {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 3rem;
-    align-items: center;
-    margin: auto 0;
-}
-
-.columna-grafica {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-}
-
-/* Marcos rústicos/industriales para las fotos */
-.marco-rustico {
-    border: 2px solid #ffffff;
-    padding: 5px;
-    background-color: #000;
-    height: 220px;
-}
-
-.marco-rustico img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    filter: contrast(1.3) brightness(0.9);
-}
-
-.columna-texto {
-    border-left: 2px dashed rgba(255,255,255,0.4);
-    padding-left: 2rem;
-    text-align: left;
-}
-
-.texto-maquina {
-    font-family: 'Special Elite', monospace;
-    font-size: 1.05rem;
-    line-height: 1.8;
-    color: #ffffff;
-    letter-spacing: 1px;
-}
-
-/* Forzar que las mini-tarjetas de navegación abajo respeten el look rústico */
-.espacio-cinta .mini-tarjeta {
-    border: 2px solid #ffffff !important;
-    background-color: #121212;
-}
-.espacio-cinta .mini-tarjeta h4 {
-    font-family: 'Special Elite', monospace;
-}
 /* ==========================================================================
    🏛️ AMBIENTACIÓN REFINADA: PORTADA DE TEXTO Y DISCO SUBYACENTE
    ========================================================================== */
@@ -620,7 +548,7 @@ body {
 
 .mini-navegacion-nombres-vinilo {
     display: flex;
-    gap: 30px;
+    gap: 0px;
 }
 
 /* Modificadores para que las mini-tarjetas inyectadas dinámicamente pierdan la imagen */
@@ -852,12 +780,47 @@ body {
 
 .espacio-vinilo .img-extra-vinilo {
     display: block;
+     left: -80px !important;
 }
 .barra-navegacion-superior-vinilo .btn-volver-hub-desde-espacio:hover {
     background-color: rgba(212, 175, 55, 0.1) !important; 
     border-color: #d4af37 !important; 
     color: #d4af37 !important; 
     transform: translateY(-1px) !important;
+}
+.contenedor-vinilo-capsula {
+   
+    position: relative !important;
+    overflow: visible !important;
+}
+
+.img-disco-giratorio{
+    position: absolute;
+
+    width: 320px;
+    height: auto;
+
+    left: 825px;   /* izquierda */
+    bottom: 150px;  /* arriba */
+
+   z-index: 50 !important;  /* 🔥 IMPORTANTE */
+
+    display: block !important; 
+
+    pointer-events: none;
+        animation: giroDisco 6s linear infinite;
+}
+
+.espacio-vinilo .img-disco-giratorio{
+    display: block;
+}
+@keyframes giroDisco {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 /* ==========================================================================
@@ -1662,19 +1625,6 @@ body {
     filter: drop-shadow(0px 10px 30px rgba(0,0,0,0.8));
 }
 
-.contenido-pantalla-celular {
-    position: absolute;
-    top: 0;
-    left: 00;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    padding-left: 25%;
-    gap: 2.5rem;
-}
-
 .bloque-cel-item {
     display: flex;
     align-items: center;
@@ -1882,21 +1832,6 @@ body {
 }
 
 /* --- AJUSTE INTERNO DEL CELULAR (Mueve el contenido a la izquierda) --- */
-.contenido-pantalla-celular {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    /* Aumentamos el padding izquierdo de 45px a 65px para empujarlo a la derecha */
-    padding: 20px 20px 20px 65px !important; 
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start !important; 
-    transform: translateX(0) !important; 
-}
-
 /* 4. Barra de navegación superior (Mismo alto y comportamiento) */
 #btn-cerrar-espacio {
     position: absolute;
@@ -2064,6 +1999,193 @@ body {
     100% { transform: translate(0.8%, 0.6%); }
 }
 /* ==========================================================================
+   🌐 BLOQUE DE CINTA MECANICA
+   ========================================================================== */
+   .pantalla.espacio-cinta {
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex !important;
+    flex-direction: column;
+    overflow: hidden;
+}
+.espacio-cinta {
+  background: url("imagen/fondo-cinta.jpg") center/cover no-repeat;
+  color: #e6e6e6;
+  font-family: "Cinzel", serif;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+.cinta-nav-izq,
+.cinta-nav-der {
+  position: absolute;
+  top: 25px;
+  display: flex;
+  gap: 10px;
+  z-index: 10;
+}
+
+.cinta-nav-izq {
+  left: 25px;
+}
+
+.cinta-nav-der {
+  right: 25px;
+}
+
+.cinta-nav-izq button,
+.cinta-nav-der button {
+  background: rgba(30, 30, 30, 0.7);
+  border: 1px solid #aaa;
+  color: #eee;
+  font-family: "Cinzel", serif;
+  padding: 10px 14px;
+  cursor: pointer;
+  letter-spacing: 1px;
+  transition: 0.3s;
+}
+
+.cinta-nav-izq button:hover,
+.cinta-nav-der button:hover {
+  background: #111;
+  border-color: #fff;
+}
+.cinta-layout {
+  display: flex;
+  justify-content: space-between;
+  padding: 120px 80px 60px 80px;
+  gap: 60px;
+}
+.cinta-izq {
+  flex: 1;
+}
+
+.cinta-izq h1 {
+  font-size: 4rem;
+  letter-spacing: 6px;
+  margin: 0;
+}
+
+.cinta-izq h2 {
+  font-size: 1.4rem;
+  margin-top: 10px;
+  opacity: 0.8;
+}
+
+.cinta-texto {
+  margin-top: 20px;
+  max-width: 400px;
+  line-height: 1.6;
+  font-size: 1.25rem;
+  opacity: 1;
+ 
+}
+
+.bobina-img {
+  margin-top: 30px;
+  width: 400px;
+  margin-top: 50px;
+  filter: grayscale(100%) contrast(1.1);
+
+}
+/* ---------------- DERECHA ---------------- */
+
+.cinta-der {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.marco-info-cinta {
+    width: 550px;
+    min-height: 600px;
+
+    background: rgba(70, 70, 70, 0.85);
+    border: 2px solid #8a8a8a;
+
+    padding: 35px;
+
+    display: flex;
+    flex-direction: column;
+
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+}
+
+.fila-info {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    margin-bottom: 30px;
+}
+
+.fila-info img {
+    width: 120px;
+    height: auto;
+    flex-shrink: 0;
+}
+.img-medidor{
+    width: 250px !important;
+    height: auto !important;
+    max-width: none !important;
+    margin-left: -43px;
+}
+
+.fila-info p {
+    margin: 0;
+    font-size: 1.25rem;
+    line-height: 1.2;
+    color: #e6e6e6;
+}
+
+.cinta-texto-secundario {
+    margin-top: 10px;
+    font-size: 1.15rem;
+    line-height: 1.15;
+    color: #d8d8d8;
+}
+
+.cinta-imagenes-finales {
+    margin-top: auto;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    gap: 5px;
+
+    padding-top: 35px;
+}
+
+.cinta-img-final {
+    width: 350px;
+    height: auto;
+
+    filter: grayscale(100%);
+}
+
+.btn-mini-nav-cinta{
+    background: rgba(30, 30, 30, 0.7);
+    border: 1px solid #aaa;
+    color: #eee;
+    font-family: "Cinzel", serif;
+    padding: 10px 14px;
+    cursor: pointer;
+    letter-spacing: 1px;
+    transition: .3s;
+}
+
+.btn-mini-nav-cinta:hover{
+    background: #111;
+    border-color: #fff;
+}
+
+/* ==========================================================================
    🌐 TIPOGRAFÍAS Y DISEÑO DE SECCIÓN DIGITAL
    ========================================================================== */
 .espacio-digital .replica-digital-contenedor,
@@ -2098,7 +2220,7 @@ body {
     bottom: 90px; /* Queda justo por encima de la barra inferior del reproductor */
     left: 30px;
     z-index: 40;
-    width: 140px; /* Tamaño ajustable según prefieras */
+    width: 750px; /* Tamaño ajustable según prefieras */
     height: auto;
     border-radius: 8px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
@@ -2106,7 +2228,7 @@ body {
 }
 
 .lista-esquina-spotify img {
-    width: 100%;
+    width: 115%;
     height: auto;
     display: block;
     object-fit: contain;
@@ -2277,7 +2399,7 @@ body {
     display: flex !important;
     flex-direction: column !important;
     gap: 25px !important;            /* Espacio de separación entre la caja de Calidad y Acceso */
-    width: 280px !important;         /* Ancho fijo para que no se estiren al moverlas */
+    width: 380px !important;         /* Ancho fijo para que no se estiren al moverlas */
 }
 
 /* Opcional: Si querés estilizar las cajitas individuales ahora que están sueltas */
@@ -2384,4 +2506,13 @@ body {
     height: auto !important;       /* Importante para no deformar la imagen */
     
     z-index: 1000 !important;
+}
+#btn-info-digital {
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+#btn-info-digital:hover {
+    color: #00ff66; /* O el color que prefieras para indicar interacción */
+    text-decoration: underline;
 }
